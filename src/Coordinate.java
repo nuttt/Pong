@@ -9,6 +9,10 @@ public class Coordinate {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Coordinate(){
+		this(0, 0);
+	}
 
 	public int getX() {
 		return x;
@@ -16,6 +20,15 @@ public class Coordinate {
 
 	public void setX(int x) {
 		this.x = x;
+	}
+	
+	public void setCoordinate(Coordinate p){
+		this.x = p.getX();
+		this.y = p.getY();
+	}
+	
+	public Coordinate getCoordinate(){
+		return new Coordinate(this.getX(),this.getY());
 	}
 
 	public int getY() {
