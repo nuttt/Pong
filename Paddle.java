@@ -6,7 +6,7 @@ public class Paddle implements Runnable {
 	int player;
 	int thick;
 	final static int DEFAULT_LENGTH = 100;
-	final static int DEFAULT_THICK = 3;
+	final static int DEFAULT_THICK = 5;
 	Game gui;
 
 	public Paddle(Game game, int player) {

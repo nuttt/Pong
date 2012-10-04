@@ -65,14 +65,14 @@ public class Balls implements Runnable {
 					else if(theta > 0)
 					{
 						if(phi >= theta)
-							phi2  = phi;
+							phi2  = (Math.toRadians(90) + phi)/2;
 						else
 							phi2 = (phi+theta)/2;
 					}
 					else
 					{
 						if(phi <= theta)
-							phi2 = phi;
+							phi2 = (Math.toRadians(-90) + phi)/2;
 						else
 							phi2 = (phi+theta)/2;
 					}
