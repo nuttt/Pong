@@ -118,6 +118,12 @@ public class Balls implements Runnable {
 						else
 							phi2 = (phi+theta)/2;
 					}
+					if(phi > Math.toRadians(MAXIMUM_ANGLE))
+						phi = Math.toRadians(MAXIMUM_ANGLE);
+					if(phi < Math.toRadians(-MAXIMUM_ANGLE))
+						phi = Math.toRadians(-MAXIMUM_ANGLE);
+					if(Math.abs(phi) < Math.toRadians(5))
+						phi = Math.random()*10-5;
 //					System.out.println("phi2: "+Math.toDegrees(phi2));
 					double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
 					b.setDX(-Math.cos(phi2)*v);
