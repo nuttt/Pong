@@ -13,10 +13,10 @@ import java.awt.Image;
 
 public class DrawPanel extends JPanel {
 	Game gui;
-	File bgFile = new File("D:/eclipse/Pong/img/background.jpg");
-	File ballMediumFile = new File("D:/eclipse/Pong/img/ball.png");
-	File padMediumFile = new File("D:/eclipse/Pong/img/pad.png");
-	File padBlueMediumFile = new File("D:/eclipse/Pong/img/padb.png");
+	File bgFile = new File("img/background.jpg");
+	File ballMediumFile = new File("img/ball.png");
+	File padMediumFile = new File("img/pad.png");
+	File padBlueMediumFile = new File("img/padb.png");
 	Image background, ballMedium, padMedium, padBlueMedium;
 	boolean paddle1Blue;
 
