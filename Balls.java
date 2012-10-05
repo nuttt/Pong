@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
-	final static int MAXIMUM_ANGLE = 75;
+	final static int MAXIMUM_ANGLE = 70;
 	public Balls(Game game) {
 		// TODO Auto-generated constructor stub
 		ballList = new ArrayList<Ball>();
@@ -22,6 +22,10 @@ public class Balls implements Runnable {
 		ballList.add(new Ball(x, y, dx, dy, radius));
 	}
 
+	public void add(Ball ball)
+	{
+		ballList.add(ball);
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -37,7 +41,7 @@ public class Balls implements Runnable {
 				 */
 				if (b.getX() - b.getRadius() < 0
 						|| b.getX() + b.getRadius() > gui.getGUIWidth()) {
-					b.setDX(-b.getDX());
+					b.setDead(true);
 				}
 				/*
 				 *  Y Bounce
@@ -81,7 +85,7 @@ public class Balls implements Runnable {
 					if(phi < Math.toRadians(-MAXIMUM_ANGLE))
 						phi = Math.toRadians(-MAXIMUM_ANGLE);
 					if(Math.abs(phi) < Math.toRadians(5))
-						phi = Math.random()*10-5;
+						phi = Math.toRadians(Math.random()*10-5);
 //					System.out.println("phi2: "+Math.toDegrees(phi2));
 					double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
 					b.setDX(Math.cos(phi2)*v);
@@ -123,13 +127,22 @@ public class Balls implements Runnable {
 					if(phi < Math.toRadians(-MAXIMUM_ANGLE))
 						phi = Math.toRadians(-MAXIMUM_ANGLE);
 					if(Math.abs(phi) < Math.toRadians(5))
-						phi = Math.random()*10-5;
+						phi = Math.toRadians(Math.random()*10-5);
 //					System.out.println("phi2: "+Math.toDegrees(phi2));
 					double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
 					b.setDX(-Math.cos(phi2)*v);
 					b.setDY(Math.sin(phi2)*v);
 				}
-				
+			}
+			int i = 0;
+			while(true)
+			{
+				if(i >= ballList.size())
+					break;
+				if(ballList.get(i).isDead())
+					ballList.remove(i);
+				else
+					i++;
 			}
 			try {
 				Thread.sleep(10);

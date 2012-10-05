@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Paddle implements Runnable {
 
 	int x;
@@ -5,6 +7,7 @@ public class Paddle implements Runnable {
 	int length;
 	int player;
 	int thick;
+	ArrayList<SnapBall> snapBall;
 	final static int DEFAULT_LENGTH = 100;
 	final static int DEFAULT_THICK = 5;
 	Game gui;
@@ -14,6 +17,7 @@ public class Paddle implements Runnable {
 		this.player = player;
 		this.setDefaultLength();
 		this.setDefaultThick();
+		snapBall = new ArrayList<SnapBall>();
 		if (player == 1)
 			x = 50;
 		else if (player == 2)
@@ -86,5 +90,36 @@ public class Paddle implements Runnable {
 		if( y > this.y - this.length/2 && y < this.y + this.length/2)
 			return true;
 		return false;
+	}
+	
+	public void addDefaultSnapBall()
+	{
+		snapBall.add(new SnapBall(x,y,Ball.DEFAULT_DX,Ball.DEFAULT_DY,Ball.DEFAULT_RADIUS,0));
+	}
+
+	public synchronized ArrayList<SnapBall> getSnapBall() {
+		return snapBall;
+	}
+	
+	public synchronized void fireSnapBall()
+	{
+		Balls balls = gui.getBalls();
+		while(!snapBall.isEmpty())
+		{
+			SnapBall s = snapBall.get(snapBall.size()-1);
+			Ball b = (Ball)s;
+			double x = getLength() / Math.tan(Math.toRadians(Balls.MAXIMUM_ANGLE)) / 2;
+			double theta = Math.atan((s.getDiffY()) / x);
+			if(Math.abs(theta) < Math.toRadians(30))
+				theta = Math.toRadians(Math.random()*60-30);
+			System.out.println(theta);
+			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
+			double dx = Math.cos(theta)*v;
+			double dy = Math.sin(theta)*v;
+			System.out.println((x+thick+b.getRadius())+" "+(y+s.getDiffY()));
+			Ball ball = new Ball(this.x+this.thick+b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
+			balls.add(ball);
+			snapBall.remove(snapBall.size()-1);
+		}
 	}
 }

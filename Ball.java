@@ -2,13 +2,18 @@
 public class Ball{
 	double x,y,dx,dy;
 	int owner;
+	boolean dead;
 	double radius;
+	final static double DEFAULT_RADIUS = 5;
+	final static double DEFAULT_DX = 3;
+	final static double DEFAULT_DY = 3;
 	public Ball() {
 		x = 500;
 		y = 500;
-		dx = 1;
-		dy = 1;
-		radius = 5;
+		dx = DEFAULT_DX;
+		dy = DEFAULT_DY;
+		radius = DEFAULT_RADIUS;
+		dead = false;
 	}
 	
 	public Ball(double x,double y, double dx, double dy, double radius)
@@ -20,6 +25,14 @@ public class Ball{
 		this.radius = radius;
 	}
 
+	public synchronized boolean isDead() {
+		return dead;
+	}
+	
+	public synchronized void setDead(boolean dead){
+		this.dead = dead;
+	}
+	
 	public synchronized double getX() {
 		return x;
 	}

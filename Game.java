@@ -108,10 +108,6 @@ public class Game implements Runnable {
 		paddle1 = new Paddle(this, 1);
 		paddle2 = new Paddle(this, 2);
 		balls = new Balls(this);
-		balls.add(50, 500, 4, 3, 5);
-		balls.add(50, 100, 4, 3, 10);
-//		balls.add(150, 50, 3, 5, 20);
-//		balls.add(400, 30, 10, 7, 10);
 	}
 
 	public void run() {
@@ -140,6 +136,13 @@ public class Game implements Runnable {
 		 * Draw GUI
 		 */
 		while (true) {
+			if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
+			{
+				//TODO Rule for snapball
+				paddle1.addDefaultSnapBall();
+			}
+			if(Math.random() > 0.9888)
+				paddle1.fireSnapBall();
 			drawPanel.repaint();
 			try {
 				Thread.sleep(10);

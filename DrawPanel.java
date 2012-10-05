@@ -31,5 +31,15 @@ public class DrawPanel extends JPanel {
 			b = a.get(i);
 			g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() - b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() * 2));
 		}
+		/*
+		 * SnapBall
+		 */
+		ArrayList<SnapBall> snap1 = paddle1.getSnapBall();
+		SnapBall s;
+		for(int i = 0 ; i < snap1.size(); i++)
+		{
+			s = snap1.get(i);
+			g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
+		}
 	}
 }
