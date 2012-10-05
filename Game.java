@@ -18,6 +18,7 @@ public class Game implements Runnable {
 	private int guiWidth;
 	private int guiHeight;
 	private Balls balls;
+	
 	/*
 	 * Drawing Tools
 	 */
