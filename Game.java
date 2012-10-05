@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /*
@@ -98,8 +102,8 @@ public class Game implements Runnable {
 	public Game() {
 		// TODO Game Constructor
 		drawPanel = new DrawPanel(this);
-		this.setGUIWidth(800);
-		this.setGUIHeight(600);
+		this.setGUIWidth(1000);
+		this.setGUIHeight(700);
 		this.setAIMode(false);
 		this.setWiiMote(false);
 		this.setShadowMode(false);

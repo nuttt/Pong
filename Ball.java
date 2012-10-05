@@ -4,9 +4,9 @@ public class Ball{
 	int owner;
 	boolean dead;
 	double radius;
-	final static double DEFAULT_RADIUS = 5;
-	final static double DEFAULT_DX = 3;
-	final static double DEFAULT_DY = 3;
+	final static double DEFAULT_RADIUS = 19;
+	final static double DEFAULT_DX = 6;
+	final static double DEFAULT_DY = 6;
 	public Ball() {
 		x = 500;
 		y = 500;

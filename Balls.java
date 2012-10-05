@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
+	boolean hitsPaddle1;
 	final static int MAXIMUM_ANGLE = 70;
 	public Balls(Game game) {
 		// TODO Auto-generated constructor stub
 		ballList = new ArrayList<Ball>();
 		gui = game;
+		hitsPaddle1 = true;
 	}
 
 	public boolean isEmpty() {
@@ -28,7 +30,6 @@ public class Balls implements Runnable {
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		Ball b;
 		while (true) {
 			for (int i = 0; i < ballList.size(); i++) {
@@ -51,7 +52,7 @@ public class Balls implements Runnable {
 					b.setDY(-b.getDY());
 				}
 				/*
-				 *  Paddle1 Bounce
+				 *  Paddle Bounce
 				 */
 				Paddle paddle1 = gui.getPaddle1();
 				if (b.getX() - b.getRadius() <= paddle1.getX()
@@ -59,6 +60,8 @@ public class Balls implements Runnable {
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
+					System.out.println("Hit paddle1");
+					hitsPaddle1 = true;
 					double x = paddle1.getLength() / Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
 					double phi = -Math.atan(b.getDY() / b.getDX());
@@ -101,6 +104,8 @@ public class Balls implements Runnable {
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
+					System.out.println("Hit paddle2");
+					hitsPaddle1 = false;
 					double x = paddle2.getLength() / Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle2.getY()) / x);
 					double phi = -Math.atan(b.getDY() / b.getDX());
@@ -150,6 +155,14 @@ public class Balls implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public boolean isHitsPaddle1() {
+		return hitsPaddle1;
+	}
+
+	public void setHitsPaddle1(boolean hitsPaddle1) {
+		this.hitsPaddle1 = hitsPaddle1;
 	}
 
 }

@@ -8,8 +8,8 @@ public class Paddle implements Runnable {
 	int player;
 	int thick;
 	ArrayList<SnapBall> snapBall;
-	final static int DEFAULT_LENGTH = 100;
-	final static int DEFAULT_THICK = 5;
+	final static int DEFAULT_LENGTH = 151;
+	final static int DEFAULT_THICK = 10;
 	Game gui;
 
 	public Paddle(Game game, int player) {
@@ -30,7 +30,7 @@ public class Paddle implements Runnable {
 		//shadow mode
 		Coordinate p;
 			p = gui.getPlayerCoordinate(player);
-		while (true) {
+		while (true) {			
 			synchronized (p) {
 				try {
 					p.wait();
@@ -59,7 +59,9 @@ public class Paddle implements Runnable {
 	}
 
 	public synchronized void setY(int y) {
-		this.y = y;
+		if(y < 75) this.y = 75;
+		else if(y > 625) this.y = 625; 
+		else this.y = y;
 	}
 
 	public synchronized int getLength() {
