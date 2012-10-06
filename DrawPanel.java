@@ -22,13 +22,13 @@ public class DrawPanel extends JPanel {
 
 	public DrawPanel(Game gui) {
 		this.gui = gui;
-        try {
-    		background = ImageIO.read(bgFile);
-    		ballMedium = ImageIO.read(ballMediumFile);
-    		padMedium = ImageIO.read(padMediumFile);
-    		padBlueMedium = ImageIO.read(padBlueMediumFile);
-        } catch (IOException e) {
-        }
+		try {
+			background = ImageIO.read(bgFile);
+			ballMedium = ImageIO.read(ballMediumFile);
+			padMedium = ImageIO.read(padMediumFile);
+			padBlueMedium = ImageIO.read(padBlueMediumFile);
+		} catch (IOException e) {
+		}
 	}
 
 	public void paintComponent(Graphics g) {
@@ -36,7 +36,7 @@ public class DrawPanel extends JPanel {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
 		g.drawImage(background, 0, 0, null);
-        
+
 		g.setColor(Color.BLACK);
 		Paddle paddle1 = gui.getPaddle1();
 		Paddle paddle2 = gui.getPaddle2();
@@ -44,40 +44,80 @@ public class DrawPanel extends JPanel {
 		Balls balls = gui.getBalls();
 		Ball b;
 		paddle1Blue = true;
-		
+
 		/*
 		 * Paddle
 		 */
-		if(balls.isHitsPaddle1()) g.drawImage(padBlueMedium, paddle1.getX()-9, paddle1.getY()-75, null);
-		else g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-75, null);
+		/*
+		 * if(balls.isHitsPaddle1()) g.drawImage(padBlueMedium,
+		 * paddle1.getX()-9, paddle1.getY()-75, null); else
+		 * g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-75, null);
+		 * 
+		 * if(!balls.isHitsPaddle1()) g.drawImage(padBlueMedium,
+		 * paddle2.getX()-9, paddle2.getY()-75, null); else
+		 * g.drawImage(padMedium, paddle2.getX()-9, paddle2.getY()-75, null);
+		 */
 
-		if(!balls.isHitsPaddle1()) g.drawImage(padBlueMedium, paddle2.getX()-9, paddle2.getY()-75, null);
-		else g.drawImage(padMedium, paddle2.getX()-9, paddle2.getY()-75, null);
-		
-		//g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() - paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
-		//g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() - paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
+		g.drawImage(padBlueMedium, paddle1.getX() - 9, paddle1.getY() - 75,
+				null);
+		g.drawImage(padMedium, paddle2.getX() - 9, paddle2.getY() - 75, null);
+
+		// g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() -
+		// paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
+		// g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() -
+		// paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
 		/*
 		 * Ball
 		 */
-		
-		for(int i = 0 ; i < a.size(); i++)
-		{
+
+		for (int i = 0; i < a.size(); i++) {
 			b = a.get(i);
-			//g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() - b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() * 2));
-			g.drawImage(ballMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
-			
+			// g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() -
+			// b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() *
+			// 2));
+			g.drawImage(ballMedium, (int) (b.getX() - b.getRadius()) - 3,
+					(int) (b.getY() - b.getRadius()) - 3, null);
+
 		}
 		/*
 		 * SnapBall
 		 */
 		ArrayList<SnapBall> snap1 = paddle1.getSnapBall();
 		SnapBall s;
-		for(int i = 0 ; i < snap1.size(); i++)
-		{
+		for (int i = 0; i < snap1.size(); i++) {
 			s = snap1.get(i);
-			//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
-			g.drawImage(ballMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius())-3, null);
+			// g.fillOval((int)(paddle1.getX()+paddle1.getThick()),
+			// (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()),
+			// (int)(2*s.getRadius()));
+			g.drawImage(
+					ballMedium,
+					(int) (paddle1.getX() + paddle1.getThick()) - 3,
+					(int) (int) (paddle1.getY() - s.getRadius() + s.getDiffY()) - 3,
+					null);
 			balls.setHitsPaddle1(true);
+		}
+
+		/*
+		 * Items
+		 */
+		g.setColor(Color.white);
+		ArrayList<Item> itemList = gui.getItems().getItemList();
+		synchronized (itemList) {
+			int n = itemList.size();
+			Item p;
+			double r;
+			for (int i = 0; i < n; i++) {
+				try {
+					p = itemList.get(i);
+					r = p.getRadius();
+					if (p instanceof ItemSplit) {
+						g.fillOval((int) (p.getX() - r), (int) (p.getY() - r),
+								(int) (2 * r), (int) (2 * r));
+					}
+				} catch (NullPointerException e) {
+					break;
+				}
+			}
 		}
 	}
 }

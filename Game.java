@@ -19,9 +19,10 @@ public class Game implements Runnable {
 	private boolean wiiMote;
 	private Coordinate[] playerCoordinate;
 	private Paddle paddle1, paddle2;
-	private int guiWidth;
-	private int guiHeight;
+	public final static int GUI_WIDTH = 1000;
+	public final static int GUI_HEIGHT = 700;
 	private Balls balls;
+	private Items items;
 	
 	/*
 	 * Drawing Tools
@@ -60,20 +61,24 @@ public class Game implements Runnable {
 	}
 
 	public int getGUIWidth() {
-		return guiWidth;
+		return GUI_WIDTH;
 	}
 
+	/*
 	public void setGUIWidth(int width) {
 		this.guiWidth = width;
 	}
+	*/
 
 	public int getGUIHeight() {
-		return guiHeight;
+		return GUI_HEIGHT;
 	}
 
+	/*
 	public void setGUIHeight(int height) {
 		this.guiHeight = height;
 	}
+	*/
 
 	public boolean isWiiMote() {
 		return wiiMote;
@@ -99,11 +104,17 @@ public class Game implements Runnable {
 	 * Constructor & Thread
 	 */
 
+	public synchronized Items getItems() {
+		return items;
+	}
+
 	public Game() {
 		// TODO Game Constructor
 		drawPanel = new DrawPanel(this);
+		/*
 		this.setGUIWidth(1000);
 		this.setGUIHeight(700);
+		*/
 		this.setAIMode(false);
 		this.setWiiMote(false);
 		this.setShadowMode(false);
@@ -113,6 +124,7 @@ public class Game implements Runnable {
 		paddle1 = new Paddle(this, 1);
 		paddle2 = new Paddle(this, 2);
 		balls = new Balls(this);
+		items = new Items();
 	}
 
 	public void run() {
@@ -166,13 +178,19 @@ public class Game implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.add(drawPanel);
-		drawPanel.setPreferredSize(new Dimension(guiWidth, guiHeight));
+		drawPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT));
 		frame.pack();
 		frame.setVisible(true);
 		
 	}
 
 	public static void main(String[] args) {
+		//TODO ImagePool
+		//TODO change test image
+		ImagePool.IMAGE_SPLIT = ImagePool.setImage("img/ball-s.png");
+		//TODO ItemList
+		Items.ITEM_POOL.add(new ItemSplit());
+
 		// TODO Main
 		Game game = new Game();
 		game.setShadowMode(true);
@@ -185,5 +203,7 @@ public class Game implements Runnable {
 		paddle2Thread.start();
 		Thread ballsThread = new Thread(game.getBalls());
 		ballsThread.start();
+		Thread itemsThread = new Thread(game.getItems());
+		itemsThread.start();
 	}
 }

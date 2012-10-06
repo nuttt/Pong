@@ -94,6 +94,10 @@ public class Paddle implements Runnable {
 		return false;
 	}
 	
+	public void addSnapBall(double diffY)
+	{
+		snapBall.add(new SnapBall(x,y,Ball.DEFAULT_DX,Ball.DEFAULT_DY,Ball.DEFAULT_RADIUS,diffY));
+	}
 	public void addDefaultSnapBall()
 	{
 		snapBall.add(new SnapBall(x,y,Ball.DEFAULT_DX,Ball.DEFAULT_DY,Ball.DEFAULT_RADIUS,0));
@@ -112,10 +116,10 @@ public class Paddle implements Runnable {
 			Ball b = (Ball)s;
 			double x = getLength() / Math.tan(Math.toRadians(Balls.MAXIMUM_ANGLE)) / 2;
 			double theta = Math.atan((s.getDiffY()) / x);
-			if(Math.abs(theta) < Math.toRadians(30))
-				theta = Math.toRadians(Math.random()*60-30);
+			if(Math.abs(theta) < Math.toRadians(10))
+				theta = Math.toRadians(Math.random()*20-10);
 			System.out.println(theta);
-			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
+			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2))*((Math.random()+1)/2);
 			double dx = Math.cos(theta)*v;
 			double dy = Math.sin(theta)*v;
 			System.out.println((x+thick+b.getRadius())+" "+(y+s.getDiffY()));
