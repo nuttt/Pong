@@ -77,6 +77,31 @@ public class DrawPanel extends JPanel {
 		
 
 		/*
+		 * Items
+		 */
+		g.setColor(Color.white);
+		ArrayList<Item> itemList = gui.getItems().getItemList();
+		synchronized (itemList) {
+			int n = itemList.size();
+			Item p;
+			double r;
+			for (int i = 0; i < n; i++) {
+				try {
+					p = itemList.get(i);
+					r = p.getRadius();
+					if (p instanceof ItemSplit) g.drawImage(itemsPic[1], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemDash) g.drawImage(itemsPic[2], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemBetray) g.drawImage(itemsPic[3], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemRandom) g.drawImage(itemsPic[4], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					
+					else if (p instanceof ItemGhost) g.drawImage(itemsPic[8], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+				} catch (NullPointerException e) {
+					break;
+				}
+			}
+		}
+		
+		/*
 		 * Paddle
 		 */
 		if(paddle1.getLength() == 261){
@@ -130,24 +155,6 @@ public class DrawPanel extends JPanel {
 			g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius())-3, null);
 		}
 
-		/*
-		 * Items
-		 */
-		g.setColor(Color.white);
-		ArrayList<Item> itemList = gui.getItems().getItemList();
-		synchronized (itemList) {
-			int n = itemList.size();
-			Item p;
-			double r;
-			for (int i = 0; i < n; i++) {
-				try {
-					p = itemList.get(i);
-					r = p.getRadius();
-					if (p instanceof ItemSplit) g.drawImage(itemsPic[1], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
-				} catch (NullPointerException e) {
-					break;
-				}
-			}
-		}
+		
 	}
 }

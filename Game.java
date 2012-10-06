@@ -193,6 +193,8 @@ public class Game implements Runnable {
 			}
 			if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
 			{
+				paddle1.setGhost(false);
+				paddle2.setGhost(false);
 				//TODO Rule for snapball
 				paddle1.addDefaultSnapBall();
 			}
@@ -226,7 +228,6 @@ public class Game implements Runnable {
 		//TODO ImagePool
 		//TODO change test image
 		//TODO ItemList
-		Items.ITEM_POOL.add(new ItemSplit());
 
 		// TODO Main
 		Game game = new Game();

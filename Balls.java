@@ -6,7 +6,7 @@ public class Balls implements Runnable {
 	hit1 hit = new hit1();
 	SoundHitY soundHitY = new SoundHitY();
 	SoundHitPaddle soundHitPaddle = new SoundHitPaddle();
-	final static int MAXIMUM_ANGLE = 60;
+	final static int MAXIMUM_ANGLE = 70;
 
 	public Balls(Game game) {
 		ballList = new ArrayList<Ball>();
@@ -46,7 +46,12 @@ public class Balls implements Runnable {
 			}
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
-				b.setX(b.getX() + b.getDX());
+				if(b.isDash())
+					b.setX(b.getX() + b.getDX()*ItemDash.DASH_FACTOR);
+				else if(b.isBetray())
+					b.setX(b.getX() + b.getDX()*ItemBetray.BETRAY_FACTOR);
+				else
+					b.setX(b.getX() + b.getDX());
 				b.setY(b.getY() + b.getDY());
 				// TODO Remove X Bounce
 				/*
@@ -86,6 +91,8 @@ public class Balls implements Runnable {
 					hit.stop();
 					hit.play();
 					b.setOwner(1);
+					b.setDash(false);
+					b.setBetray(false);
 					double x = paddle1.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
@@ -129,6 +136,8 @@ public class Balls implements Runnable {
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
+					b.setDash(false);
+					b.setBetray(false);
 					hit.stop();
 					hit.play();
 					b.setOwner(2);
@@ -189,6 +198,49 @@ public class Balls implements Runnable {
 										* Math.sin(theta2), b.getRadius());
 								itemList.remove(j--);
 								ballList.add(b2);
+							}
+							else if(p instanceof ItemDash)
+							{
+								itemList.remove(j--);
+								if(b.getDX() < 0)
+									b.setDX(-b.getVelocity());
+								else
+									b.setDX(+b.getVelocity());
+								b.setDY(0);
+								b.setDash(true);
+							}
+							else if(p instanceof ItemBetray)
+							{
+								itemList.remove(j--);
+								if(b.getDX() < 0)
+									b.setDX(b.getVelocity());
+								else
+									b.setDX(-b.getVelocity());
+								b.setDY(0);
+								b.setBetray(true);
+							}
+							else if(p instanceof ItemRandom)
+							{
+								itemList.remove(j--);
+								double theta2;
+								while (true) {
+									theta2 = Math.random() * 360 - 180;
+									if (Math.abs(theta2) < MAXIMUM_ANGLE
+											|| Math.abs(theta2) > 180 - MAXIMUM_ANGLE)
+										break;
+								}
+								theta2 = Math.toRadians(theta2);
+								double v = b.getVelocity();
+								b.setDX(v*Math.cos(v));
+								b.setDY(v*Math.sin(v));
+							}
+							else if(p instanceof ItemGhost)
+							{
+								itemList.remove(j--);
+								if(b.owner == 1)
+									paddle1.setGhost(true);
+								else
+									paddle2.setGhost(true);
 							}
 						}
 					} catch (NullPointerException e) {

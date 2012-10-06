@@ -7,6 +7,7 @@ public class Paddle implements Runnable {
 	int length;
 	int player;
 	int score;
+	boolean ghost;
 	
 	public void increaseScore(){
 		this.score++;
@@ -37,6 +38,7 @@ public class Paddle implements Runnable {
 			x = 50;
 		else if (player == 2)
 			x = gui.getGUIWidth() - 50;
+		ghost = false;
 	}
 
 	@Override
@@ -62,7 +64,10 @@ public class Paddle implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			setY(gui.getPlayerCoordinate(player).getY());
+			if(isGhost())
+				setY(gui.getGUIHeight()-gui.getPlayerCoordinate(player).getY());
+			else
+				setY(gui.getPlayerCoordinate(player).getY());
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -149,5 +154,11 @@ public class Paddle implements Runnable {
 			balls.add(ball);
 			snapBall.remove(snapBall.size()-1);
 		}
+	}
+	public synchronized boolean isGhost() {
+		return ghost;
+	}
+	public synchronized void setGhost(boolean ghost) {
+		this.ghost = ghost;
 	}
 }

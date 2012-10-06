@@ -5,9 +5,15 @@ public class Items implements Runnable {
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	public static ArrayList<Item> ITEM_POOL = new ArrayList<Item>();
 	public static int MAXIMUM_ITEM = 3;
+	public static int ITEM_INTERVAL = 10;
 
 	public Items() {
 		// TODO Auto-generated constructor stub
+		Items.ITEM_POOL.add(new ItemSplit());
+		Items.ITEM_POOL.add(new ItemDash());
+		Items.ITEM_POOL.add(new ItemBetray());
+		Items.ITEM_POOL.add(new ItemRandom());
+		Items.ITEM_POOL.add(new ItemGhost());
 	}
 
 	@Override
@@ -30,7 +36,7 @@ public class Items implements Runnable {
 					itemList.add(t);
 			}
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(ITEM_INTERVAL);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
