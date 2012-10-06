@@ -222,17 +222,16 @@ public class Balls implements Runnable {
 							else if(p instanceof ItemRandom)
 							{
 								itemList.remove(j--);
-								double theta2;
+								double theta3;
 								while (true) {
-									theta2 = Math.random() * 360 - 180;
-									if (Math.abs(theta2) < MAXIMUM_ANGLE
-											|| Math.abs(theta2) > 180 - MAXIMUM_ANGLE)
+									theta3 = Math.random() * 360 - 180;
+									if (Math.abs(theta3) < MAXIMUM_ANGLE)
 										break;
 								}
-								theta2 = Math.toRadians(theta2);
+								theta3 = Math.toRadians(theta3);
 								double v = b.getVelocity();
-								b.setDX(v*Math.cos(v));
-								b.setDY(v*Math.sin(v));
+								b.setDX(v*Math.cos(theta3));
+								b.setDY(v*Math.sin(theta3));
 							}
 							else if(p instanceof ItemGhost)
 							{
