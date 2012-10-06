@@ -8,7 +8,7 @@ public class Paddle implements Runnable {
 	int player;
 	int thick;
 	ArrayList<SnapBall> snapBall;
-	final static int DEFAULT_LENGTH = 151;
+	final static int DEFAULT_LENGTH = 261;
 	final static int DEFAULT_THICK = 10;
 	Game gui;
 

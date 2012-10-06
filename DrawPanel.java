@@ -1,13 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
-
 import javax.imageio.*;
 import java.util.ArrayList;
 import java.io.*;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -15,20 +10,33 @@ public class DrawPanel extends JPanel {
 	Game gui;
 	File bgFile = new File("img/background.jpg");
 	File ballMediumFile = new File("img/ball.png");
+	File ballBlueMediumFile = new File("img/ballb.png");
+	File ballYellowMediumFile = new File("img/bally.png");
 	File padMediumFile = new File("img/pad.png");
 	File padBlueMediumFile = new File("img/padb.png");
-	Image background, ballMedium, padMedium, padBlueMedium;
+	File padShortFile = new File("img/pad-s.png");
+	File padBlueShortFile = new File("img/padb-s.png");
+	File padLongFile = new File("img/pad-l.png");
+	File padBlueLongFile = new File("img/padb-l.png");
+	Image background, ballMedium, padMedium, padBlueMedium, ballBlueMedium, ballYellowMedium;
+	Image padShort, padBlueShort, padLong, padBlueLong;
 	boolean paddle1Blue;
 
 	public DrawPanel(Game gui) {
 		this.gui = gui;
-		try {
-			background = ImageIO.read(bgFile);
-			ballMedium = ImageIO.read(ballMediumFile);
-			padMedium = ImageIO.read(padMediumFile);
-			padBlueMedium = ImageIO.read(padBlueMediumFile);
-		} catch (IOException e) {
-		}
+        try {
+    		background = ImageIO.read(bgFile);
+    		ballMedium = ImageIO.read(ballMediumFile);
+    		ballBlueMedium = ImageIO.read(ballBlueMediumFile);
+    		ballYellowMedium = ImageIO.read(ballYellowMediumFile);
+    		padMedium = ImageIO.read(padMediumFile);
+    		padBlueMedium = ImageIO.read(padBlueMediumFile);
+    		padShort = ImageIO.read(padShortFile);
+    		padBlueShort = ImageIO.read(padBlueShortFile);
+    		padLong = ImageIO.read(padLongFile);
+    		padBlueLong = ImageIO.read(padBlueLongFile);
+        } catch (IOException e) {
+        }
 	}
 
 	public void paintComponent(Graphics g) {
@@ -48,36 +56,46 @@ public class DrawPanel extends JPanel {
 		/*
 		 * Paddle
 		 */
-		/*
-		 * if(balls.isHitsPaddle1()) g.drawImage(padBlueMedium,
-		 * paddle1.getX()-9, paddle1.getY()-75, null); else
-		 * g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-75, null);
-		 * 
-		 * if(!balls.isHitsPaddle1()) g.drawImage(padBlueMedium,
-		 * paddle2.getX()-9, paddle2.getY()-75, null); else
-		 * g.drawImage(padMedium, paddle2.getX()-9, paddle2.getY()-75, null);
-		 */
+		if(paddle1.getLength() == 261){
+			g.drawImage(padLong, paddle1.getX()-9, paddle1.getY()-75, null);
+		}
+		else if(paddle1.getLength() == 103){
+			g.drawImage(padShort, paddle1.getX()-9, paddle1.getY()-75, null);
+		}
+		else{
+			g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-75, null);
+		}
+		if(paddle2.getLength() == 261){
+			g.drawImage(padBlueLong, paddle2.getX()-9, paddle2.getY()-75, null);
+		}
+		else if(paddle2.getLength() == 103){
+			g.drawImage(padBlueShort, paddle2.getX()-9, paddle2.getY()-75, null);
+		}
+		else{
+			g.drawImage(padBlueMedium, paddle2.getX()-9, paddle2.getY()-75, null);
+		}
+		
+		//g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() - paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
+		//g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() - paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
 
-		g.drawImage(padBlueMedium, paddle1.getX() - 9, paddle1.getY() - 75,
-				null);
-		g.drawImage(padMedium, paddle2.getX() - 9, paddle2.getY() - 75, null);
-
-		// g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() -
-		// paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
-		// g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() -
-		// paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
 		/*
 		 * Ball
 		 */
 
 		for (int i = 0; i < a.size(); i++) {
 			b = a.get(i);
-			// g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() -
-			// b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() *
-			// 2));
-			g.drawImage(ballMedium, (int) (b.getX() - b.getRadius()) - 3,
-					(int) (b.getY() - b.getRadius()) - 3, null);
+			//g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() - b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() * 2));
+			
+			if(b.getOwner() == 1){
+				g.drawImage(ballYellowMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
+			}
+			else if(b.getOwner() == 2){
 
+				g.drawImage(ballBlueMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
+			}
+			else{
+				g.drawImage(ballMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
+			}
 		}
 		/*
 		 * SnapBall
@@ -86,14 +104,8 @@ public class DrawPanel extends JPanel {
 		SnapBall s;
 		for (int i = 0; i < snap1.size(); i++) {
 			s = snap1.get(i);
-			// g.fillOval((int)(paddle1.getX()+paddle1.getThick()),
-			// (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()),
-			// (int)(2*s.getRadius()));
-			g.drawImage(
-					ballMedium,
-					(int) (paddle1.getX() + paddle1.getThick()) - 3,
-					(int) (int) (paddle1.getY() - s.getRadius() + s.getDiffY()) - 3,
-					null);
+			//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
+			g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius())-3, null);
 			balls.setHitsPaddle1(true);
 		}
 

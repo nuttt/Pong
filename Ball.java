@@ -5,8 +5,8 @@ public class Ball{
 	boolean dead;
 	double radius;
 	final static double DEFAULT_RADIUS = 19;
-	final static double DEFAULT_DX = 6;
-	final static double DEFAULT_DY = 6;
+	final static double DEFAULT_DX = 4;
+	final static double DEFAULT_DY = 4;
 	public Ball() {
 		x = 500;
 		y = 500;
@@ -14,8 +14,17 @@ public class Ball{
 		dy = DEFAULT_DY;
 		radius = DEFAULT_RADIUS;
 		dead = false;
+		owner = 1;
 	}
 	
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+
 	public Ball(double x,double y, double dx, double dy, double radius)
 	{
 		this.x = x;
