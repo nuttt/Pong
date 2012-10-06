@@ -4,7 +4,8 @@ public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
 	hit1 hit = new hit1();
-	wood_hit1  wood_hit = new wood_hit1();
+	SoundHitY soundHitY = new SoundHitY();
+	SoundHitPaddle soundHitPaddle = new SoundHitPaddle();
 	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
@@ -56,14 +57,12 @@ public class Balls implements Runnable {
 						paddle2.increaseScore();
 					}
 					b.setDead(true);
-					hit.play();
 				}
 				if(b.getX() + b.getRadius() > gui.getGUIWidth()) {
 					if(ballList.size() == 1){
 						paddle1.increaseScore();
 					}
 					b.setDead(true);
-					hit.play();
 				}
 				/*
 				 * Y Bounce
@@ -72,6 +71,7 @@ public class Balls implements Runnable {
 						|| b.getY() + b.getRadius() > gui.getGUIHeight()
 						&& b.getDY() > 0) {
 					b.setDY(-b.getDY());
+					hit.stop();
 					hit.play();
 				}
 				/*
@@ -83,8 +83,8 @@ public class Balls implements Runnable {
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
-//					hit.play();
-					wood_hit.play();
+					hit.stop();
+					hit.play();
 					b.setOwner(1);
 					double x = paddle1.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
@@ -129,8 +129,8 @@ public class Balls implements Runnable {
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
-//					hit.play();
-					wood_hit.play();
+					hit.stop();
+					hit.play();
 					b.setOwner(2);
 					double x = paddle2.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;

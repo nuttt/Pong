@@ -21,7 +21,8 @@ public class Paddle implements Runnable {
 
 	int thick;
 	ArrayList<SnapBall> snapBall;
-	final static int DEFAULT_LENGTH = 261;
+	//151 for normal, 261 for long, 103 for short
+	final static int DEFAULT_LENGTH = 103;
 	final static int DEFAULT_THICK = 10;
 	Game gui;
 
@@ -80,8 +81,8 @@ public class Paddle implements Runnable {
 	}
 
 	public synchronized void setY(int y) {
-		if(y < 75) this.y = 75;
-		else if(y > 625) this.y = 625; 
+		if(y < length/2) this.y = length/2;
+		else if(y > 700 - length/2) this.y = 700 - length/2; 
 		else this.y = y;
 	}
 
