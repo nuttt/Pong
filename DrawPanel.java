@@ -80,26 +80,26 @@ public class DrawPanel extends JPanel {
 		 * Paddle
 		 */
 		if(paddle1.getLength() == 261){
-			g.drawImage(padLong, paddle1.getX()-9, paddle1.getY()-75, null);
+			g.drawImage(padLong, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
 		}
 		else if(paddle1.getLength() == 103){
-			g.drawImage(padShort, paddle1.getX()-9, paddle1.getY()-75, null);
+			g.drawImage(padShort, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
 		}
 		else{
-			g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-75, null);
+			g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
 		}
 		if(paddle2.getLength() == 261){
-			g.drawImage(padBlueLong, paddle2.getX()-9, paddle2.getY()-75, null);
+			g.drawImage(padBlueLong, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
 		}
 		else if(paddle2.getLength() == 103){
-			g.drawImage(padBlueShort, paddle2.getX()-9, paddle2.getY()-75, null);
+			g.drawImage(padBlueShort, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
 		}
 		else{
-			g.drawImage(padBlueMedium, paddle2.getX()-9, paddle2.getY()-75, null);
+			g.drawImage(padBlueMedium, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
 		}
 		
-		//g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() - paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
-		//g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() - paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
+		g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() - paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
+		g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() - paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
 
 		/*
 		 * Ball

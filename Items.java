@@ -17,7 +17,7 @@ public class Items implements Runnable {
 			synchronized (Game.lockPause) {
 				if(Game.isPaused)
 					try {
-						wait();
+						Game.lockPause.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

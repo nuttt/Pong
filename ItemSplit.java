@@ -4,7 +4,7 @@ public class ItemSplit extends Item {
 	public final static String name = "Split";
 	public ItemSplit() {
 		// TODO Auto-generated constructor stub
-		super(ImagePool.IMAGE_SPLIT);
+		super();
 	}
 
 	@Override

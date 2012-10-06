@@ -21,7 +21,7 @@ public class Game implements Runnable {
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
 	public static boolean isPaused = false;
-	public static Object lockPause;
+	public static Object lockPause = new Object();
 
 	private Balls balls;
 	private Items items;
@@ -155,7 +155,7 @@ public class Game implements Runnable {
 							Game.isPaused = false;
 							//Resume
 							synchronized (Game.lockPause) {
-								notifyAll();
+								Game.lockPause.notifyAll();
 							}
 						}
 					}
@@ -186,7 +186,7 @@ public class Game implements Runnable {
 			synchronized (Game.lockPause) {
 				if(Game.isPaused)
 					try {
-						wait();
+						Game.lockPause.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -225,7 +225,6 @@ public class Game implements Runnable {
 	public static void main(String[] args) {
 		//TODO ImagePool
 		//TODO change test image
-		ImagePool.IMAGE_SPLIT = ImagePool.setImage("img/ball-s.png");
 		//TODO ItemList
 		Items.ITEM_POOL.add(new ItemSplit());
 

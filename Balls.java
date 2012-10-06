@@ -4,6 +4,7 @@ public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
 	hit1 hit = new hit1();
+	wood_hit1  wood_hit = new wood_hit1();
 	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
@@ -37,7 +38,7 @@ public class Balls implements Runnable {
 			synchronized (Game.lockPause) {
 				if(Game.isPaused)
 					try {
-						wait();
+						Game.lockPause.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -82,7 +83,8 @@ public class Balls implements Runnable {
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
-					hit.play();
+//					hit.play();
+					wood_hit.play();
 					b.setOwner(1);
 					double x = paddle1.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
@@ -127,14 +129,15 @@ public class Balls implements Runnable {
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
-					hit.play();
+//					hit.play();
+					wood_hit.play();
 					b.setOwner(2);
 					double x = paddle2.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle2.getY()) / x);
 					double phi = -Math.atan(b.getDY() / b.getDX());
 					double phi2;
-					// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+					 System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
 					if (theta == 0)
 						phi2 = phi;
 					else if (theta > 0) {
