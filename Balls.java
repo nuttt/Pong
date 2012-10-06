@@ -3,14 +3,13 @@ import java.util.ArrayList;
 public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
-	boolean hitsPaddle1;
+	hit1 hit = new hit1();
 	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
 		// TODO Auto-generated constructor stub
 		ballList = new ArrayList<Ball>();
 		gui = game;
-		hitsPaddle1 = true;
 	}
 
 	public boolean isEmpty() {
@@ -32,6 +31,8 @@ public class Balls implements Runnable {
 	@Override
 	public void run() {
 		Ball b;
+		Paddle paddle1 = gui.getPaddle1();
+		Paddle paddle2 = gui.getPaddle2();
 		while (true) {
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
@@ -41,9 +42,19 @@ public class Balls implements Runnable {
 				/*
 				 * X Bounce
 				 */
-				if (b.getX() - b.getRadius() < 0
-						|| b.getX() + b.getRadius() > gui.getGUIWidth()) {
+				if (b.getX() - b.getRadius() < 0){
+					if(ballList.size() == 1){
+						paddle2.increaseScore();
+					}
 					b.setDead(true);
+					hit.play();
+				}
+				if(b.getX() + b.getRadius() > gui.getGUIWidth()) {
+					if(ballList.size() == 1){
+						paddle1.increaseScore();
+					}
+					b.setDead(true);
+					hit.play();
 				}
 				/*
 				 * Y Bounce
@@ -52,18 +63,19 @@ public class Balls implements Runnable {
 						|| b.getY() + b.getRadius() > gui.getGUIHeight()
 						&& b.getDY() > 0) {
 					b.setDY(-b.getDY());
+					hit.play();
 				}
 				/*
 				 * Paddle Bounce
 				 */
-				Paddle paddle1 = gui.getPaddle1();
 				if (b.getX() - b.getRadius() <= paddle1.getX()
 						+ paddle1.getThick()
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
-					hitsPaddle1 = true;
+					hit.play();
+					b.setOwner(1);
 					double x = paddle1.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
@@ -101,14 +113,14 @@ public class Balls implements Runnable {
 				/*
 				 * Paddle2 Bounce
 				 */
-				Paddle paddle2 = gui.getPaddle2();
 				if (b.getX() + b.getRadius() <= paddle2.getX()
 						+ paddle2.getThick()
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
-					hitsPaddle1 = false;
+					hit.play();
+					b.setOwner(2);
 					double x = paddle2.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle2.getY()) / x);
@@ -188,14 +200,6 @@ public class Balls implements Runnable {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public boolean isHitsPaddle1() {
-		return hitsPaddle1;
-	}
-
-	public void setHitsPaddle1(boolean hitsPaddle1) {
-		this.hitsPaddle1 = hitsPaddle1;
 	}
 
 }

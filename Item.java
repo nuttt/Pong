@@ -4,7 +4,7 @@ import java.awt.Image;
 public abstract class Item {
 	private double x,y;
 	private double radius;
-	public final static double DEFAULT_ITEM_REDIUS = 10;
+	public final static double DEFAULT_ITEM_REDIUS = 20;
 	public final static double ITEM_BOUND_X = 150;
 	public final static double ITEM_BOUND_Y = 50;
 	Image icon;

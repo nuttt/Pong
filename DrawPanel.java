@@ -18,12 +18,25 @@ public class DrawPanel extends JPanel {
 	File padBlueShortFile = new File("img/padb-s.png");
 	File padLongFile = new File("img/pad-l.png");
 	File padBlueLongFile = new File("img/padb-l.png");
-	Image background, ballMedium, padMedium, padBlueMedium, ballBlueMedium, ballYellowMedium;
-	Image padShort, padBlueShort, padLong, padBlueLong;
+	File[] itemsPicFile = new File[11];
+	Image background, ballMedium, ballBlueMedium, ballYellowMedium;
+	Image padMedium, padBlueMedium, padShort, padBlueShort, padLong, padBlueLong;
+	Image[] itemsPic = new Image[11];
 	boolean paddle1Blue;
 
 	public DrawPanel(Game gui) {
 		this.gui = gui;
+		itemsPicFile[0] = new File("img/item-random2.png");
+		itemsPicFile[1] = new File("img/item-ball.png");
+		itemsPicFile[2] = new File("img/item-dash.png");
+		itemsPicFile[3] = new File("img/item-betray.png");
+		itemsPicFile[4] = new File("img/item-random.png");
+		itemsPicFile[5] = new File("img/item-fast.png");
+		itemsPicFile[6] = new File("img/item-wide.png");
+		itemsPicFile[7] = new File("img/item-narrow.png");
+		itemsPicFile[8] = new File("img/item-reverse.png");
+		itemsPicFile[9] = new File("img/item-magnet.png");
+		itemsPicFile[10] = new File("img/item-shock.png");
         try {
     		background = ImageIO.read(bgFile);
     		ballMedium = ImageIO.read(ballMediumFile);
@@ -35,6 +48,9 @@ public class DrawPanel extends JPanel {
     		padBlueShort = ImageIO.read(padBlueShortFile);
     		padLong = ImageIO.read(padLongFile);
     		padBlueLong = ImageIO.read(padBlueLongFile);
+    		for (int i = 0; i < itemsPicFile.length; i++) {
+    			itemsPic[i]	= ImageIO.read(itemsPicFile[i]);
+    		}
         } catch (IOException e) {
         }
 	}
@@ -52,6 +68,13 @@ public class DrawPanel extends JPanel {
 		Balls balls = gui.getBalls();
 		Ball b;
 		paddle1Blue = true;
+		
+		/*
+		 * Score Point
+		 */
+		g.setColor(new Color(255, 255, 255, 155));
+		g.setFont(new Font("Arial", Font.BOLD, 52));
+		g.drawString(paddle1.getScore()+" : "+paddle2.getScore(), 470, 50);
 
 		/*
 		 * Paddle
@@ -90,7 +113,6 @@ public class DrawPanel extends JPanel {
 				g.drawImage(ballYellowMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
 			}
 			else if(b.getOwner() == 2){
-
 				g.drawImage(ballBlueMedium, (int)(b.getX() - b.getRadius())-3, (int)(b.getY() - b.getRadius())-3, null);
 			}
 			else{
@@ -106,7 +128,6 @@ public class DrawPanel extends JPanel {
 			s = snap1.get(i);
 			//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
 			g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius())-3, null);
-			balls.setHitsPaddle1(true);
 		}
 
 		/*
@@ -122,10 +143,7 @@ public class DrawPanel extends JPanel {
 				try {
 					p = itemList.get(i);
 					r = p.getRadius();
-					if (p instanceof ItemSplit) {
-						g.fillOval((int) (p.getX() - r), (int) (p.getY() - r),
-								(int) (2 * r), (int) (2 * r));
-					}
+					if (p instanceof ItemSplit) g.drawImage(itemsPic[1], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 				} catch (NullPointerException e) {
 					break;
 				}

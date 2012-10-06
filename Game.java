@@ -17,6 +17,8 @@ public class Game implements Runnable {
 	private Paddle paddle1, paddle2;
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
+	public static boolean isPaused = false;
+
 	private Balls balls;
 	private Items items;
 	
@@ -27,7 +29,7 @@ public class Game implements Runnable {
 
 	/*
 	 * Getters & Setters
-	 */
+	 */	
 	public DrawPanel getDrawPanel() {
 		return drawPanel;
 	}
@@ -105,7 +107,6 @@ public class Game implements Runnable {
 	}
 
 	public Game() {
-		// TODO Game Constructor
 		drawPanel = new DrawPanel(this);
 		/*
 		this.setGUIWidth(1000);

@@ -6,6 +6,19 @@ public class Paddle implements Runnable {
 	int y;
 	int length;
 	int player;
+	int score;
+	
+	public void increaseScore(){
+		this.score++;
+	}
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	int thick;
 	ArrayList<SnapBall> snapBall;
 	final static int DEFAULT_LENGTH = 261;
@@ -15,6 +28,7 @@ public class Paddle implements Runnable {
 	public Paddle(Game game, int player) {
 		gui = game;
 		this.player = player;
+		this.score = 0;
 		this.setDefaultLength();
 		this.setDefaultThick();
 		snapBall = new ArrayList<SnapBall>();
