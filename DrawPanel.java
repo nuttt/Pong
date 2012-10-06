@@ -18,9 +18,11 @@ public class DrawPanel extends JPanel {
 	File padBlueShortFile = new File("img/padb-s.png");
 	File padLongFile = new File("img/pad-l.png");
 	File padBlueLongFile = new File("img/padb-l.png");
+	File pauseFile = new File("img/pause.png");
 	File[] itemsPicFile = new File[11];
 	Image background, ballMedium, ballBlueMedium, ballYellowMedium;
 	Image padMedium, padBlueMedium, padShort, padBlueShort, padLong, padBlueLong;
+	Image pauseBg;
 	Image[] itemsPic = new Image[11];
 	boolean paddle1Blue;
 
@@ -48,6 +50,7 @@ public class DrawPanel extends JPanel {
     		padBlueShort = ImageIO.read(padBlueShortFile);
     		padLong = ImageIO.read(padLongFile);
     		padBlueLong = ImageIO.read(padBlueLongFile);
+    		pauseBg = ImageIO.read(pauseFile);
     		for (int i = 0; i < itemsPicFile.length; i++) {
     			itemsPic[i]	= ImageIO.read(itemsPicFile[i]);
     		}
@@ -149,5 +152,14 @@ public class DrawPanel extends JPanel {
 				}
 			}
 		}
+		
+		/*
+		 * If Pause, show pause window
+		 */
+		if(Game.isPaused){
+			g.drawImage(pauseBg, 0, 0, null);
+		}
+		
+		
 	}
 }
