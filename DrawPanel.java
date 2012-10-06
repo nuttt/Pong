@@ -57,7 +57,6 @@ public class DrawPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		// TODO Paint Graphics
-		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
 		g.drawImage(background, 0, 0, null);
 
@@ -74,7 +73,8 @@ public class DrawPanel extends JPanel {
 		 */
 		g.setColor(new Color(255, 255, 255, 155));
 		g.setFont(new Font("Arial", Font.BOLD, 52));
-		g.drawString(paddle1.getScore()+" : "+paddle2.getScore(), 470, 50);
+		g.drawString(paddle1.getScore()+" : "+paddle2.getScore(), 470, 50);	
+		
 
 		/*
 		 * Paddle

@@ -12,8 +12,16 @@ public class Items implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while (true) {
+			// Check if Paused
+			synchronized (Game.lockPause) {
+				if(Game.isPaused)
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			}
 			if (itemList.size() < MAXIMUM_ITEM) {
 					int i = (int) (Math.random() * ITEM_POOL.size());
 					Item t = ITEM_POOL.get(i).clone();
@@ -24,7 +32,6 @@ public class Items implements Runnable {
 			try {
 				Thread.sleep(4000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

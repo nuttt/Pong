@@ -7,7 +7,6 @@ public class Balls implements Runnable {
 	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
-		// TODO Auto-generated constructor stub
 		ballList = new ArrayList<Ball>();
 		gui = game;
 	}
@@ -34,6 +33,15 @@ public class Balls implements Runnable {
 		Paddle paddle1 = gui.getPaddle1();
 		Paddle paddle2 = gui.getPaddle2();
 		while (true) {
+			// Check if Paused
+			synchronized (Game.lockPause) {
+				if(Game.isPaused)
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			}
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
 				b.setX(b.getX() + b.getDX());

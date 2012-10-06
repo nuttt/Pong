@@ -44,12 +44,20 @@ public class Paddle implements Runnable {
 		//shadow mode
 		Coordinate p;
 			p = gui.getPlayerCoordinate(player);
-		while (true) {			
+		while (true) {
+			// Check if Paused
+			synchronized (Game.lockPause) {
+				if(Game.isPaused)
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			}
 			synchronized (p) {
 				try {
 					p.wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -57,7 +65,6 @@ public class Paddle implements Runnable {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -14,7 +14,6 @@ public class ImagePool {
 		try {
 			return ImageIO.read(new File(ImageURL));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

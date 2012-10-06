@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 
 /*
@@ -18,6 +21,7 @@ public class Game implements Runnable {
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
 	public static boolean isPaused = false;
+	public static Object lockPause;
 
 	private Balls balls;
 	private Items items;
@@ -143,6 +147,35 @@ public class Game implements Runnable {
 						getPlayerCoordinate(1)));
 				drawPanel.addMouseMotionListener(new PongMouseListener(
 						getPlayerCoordinate(2)));
+				drawPanel.addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent arg0) {
+						System.out.println("Mouse clicked");
+						if(!Game.isPaused) Game.isPaused = true;
+						else if(Game.isPaused) {
+							Game.isPaused = false;
+							//Resume
+							synchronized (Game.lockPause) {
+								notifyAll();
+							}
+						}
+					}
+
+					public void mouseEntered(MouseEvent e) {
+						
+					}
+
+					public void mouseExited(MouseEvent e) {
+						
+					}
+
+					public void mousePressed(MouseEvent e) {
+						
+					}
+
+					public void mouseReleased(MouseEvent e) {
+						
+					}
+				});
 			}
 		}
 
@@ -150,6 +183,14 @@ public class Game implements Runnable {
 		 * Draw GUI
 		 */
 		while (true) {
+			synchronized (Game.lockPause) {
+				if(Game.isPaused)
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			}
 			if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
 			{
 				//TODO Rule for snapball
