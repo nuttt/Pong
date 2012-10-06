@@ -149,7 +149,6 @@ public class Game implements Runnable {
 						getPlayerCoordinate(2)));
 				drawPanel.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent arg0) {
-						System.out.println("Mouse clicked");
 						if(!Game.isPaused) Game.isPaused = true;
 						else if(Game.isPaused) {
 							Game.isPaused = false;
@@ -186,6 +185,7 @@ public class Game implements Runnable {
 			synchronized (Game.lockPause) {
 				if(Game.isPaused)
 					try {
+						drawPanel.repaint();
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
