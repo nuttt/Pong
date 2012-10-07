@@ -185,7 +185,7 @@ public class Game implements Runnable {
 			if (isWiiMote()) {
 				wiimotes = WiiUseApiManager.getWiimotes(1, true);
 				wiimotes[0].activateIRTRacking();
-				wiimotes[0].activateMotionSensing();
+				//wiimotes[0].activateMotionSensing();
 				wiimotes[0].addWiiMoteEventListeners(new PongWiiListener(this, 1));
 
 			} else {
@@ -267,13 +267,13 @@ public class Game implements Runnable {
 				hasWinner = true;
 				winner = 1;
 				System.out.println("player1 wins");
-				Sound.playLongFull();
+				//Sound.playLongFull();
 			}
 			else if(paddle2.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 2;
 				System.out.println("player2 wins");
-				Sound.playLongFull();
+				//Sound.playLongFull();
 			}
 			
 			// Check Pause game
@@ -350,7 +350,10 @@ public class Game implements Runnable {
 		ballsThread.start();
 		Thread itemsThread = new Thread(game.getItems());
 		itemsThread.start();
-		Thread RumbleThread1 = new Thread(new Rumble(game,1));
-		RumbleThread1.start();
+		if(game.isWiiMote())
+		{
+			Thread RumbleThread1 = new Thread(new Rumble(game,1));
+			RumbleThread1.start();
+		}
 	}
 }

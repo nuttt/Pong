@@ -25,6 +25,33 @@ public class PongWiiListener implements WiimoteListener {
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.isButtonAJustPressed())
+		{
+			// Click to start the game
+			if(!Game.isPaused() && !Game.isStarted()){
+				Game.setStarted(true);
+				//Resume
+				synchronized (Game.lockPause) {
+					Game.lockPause.notifyAll();
+				}
+			}
+			
+			// Get the winner, Click to start the game
+			else if(Game.isHasWinner()){
+				Game.setWinner(0);
+				gui.getPaddle1().setScore(0);
+				gui.getPaddle2().setScore(0);
+				Game.setHasWinner(false);
+				Game.setStarted(false);
+			}
+			else if(Game.isStarted())
+			{
+				//if(player == 1)
+					gui.getPaddle1().fireSnapBall();
+				//else if(player == 2)
+					gui.getPaddle2().fireSnapBall();
+			}
+		}
 		if(arg0.isButtonBJustPressed())
 		{
 			if(!Game.isPaused()) Game.setPaused(true);
@@ -99,14 +126,14 @@ public class PongWiiListener implements WiimoteListener {
 	public void onMotionSensingEvent(MotionSensingEvent arg0) {
 		// TODO Auto-generated method stub
 //		System.out.println(arg0.getRawAcceleration().getX());
-		if(arg0.getRawAcceleration().getX() < 50)
-		{
-			gui.getPaddle1().fireSnapBall();
-		}
-		if(arg0.getRawAcceleration().getX() < 50)
-		{
-			gui.getPaddle2().fireSnapBall();
-		}
+//		if(arg0.getRawAcceleration().getX() < 50)
+//		{
+//			gui.getPaddle1().fireSnapBall();
+//		}
+//		if(arg0.getRawAcceleration().getX() < 50)
+//		{
+//			gui.getPaddle2().fireSnapBall();
+//		}
 		
 	}
 
