@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-
-public class ItemBetray extends Item {
-
-	public final static String name = "Betray";
-	public final static double BETRAY_FACTOR = 1.8;
-	public ItemBetray() {
-		super();
-	}
-
-	@Override
-	public Item clone() {
-		return new ItemBetray();
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void makeEffect(Game gui, Ball b) {
-		if(b.getDX() < 0)
-			b.setDX(b.getVelocity());
-		else
-			b.setDX(-b.getVelocity());
-		b.setDY(0);
-		b.setBetray(true);
-	}
-
-}
-=======
 
 public class ItemBetray extends Item {
 
@@ -59,4 +28,3 @@ public class ItemBetray extends Item {
 	}
 
 }
->>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c

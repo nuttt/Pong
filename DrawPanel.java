@@ -96,14 +96,9 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-<<<<<<< HEAD
 		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
-=======
->>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 		g.drawImage(background, 0, 0, null);
-
-		g.setColor(Color.BLACK);
 		Paddle paddle1 = gui.getPaddle1();
 		Paddle paddle2 = gui.getPaddle2();
 		ArrayList<Ball> a = gui.getBalls().getList();

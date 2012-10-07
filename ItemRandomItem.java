@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-import java.util.ArrayList;
-
-public class ItemRandomItem extends Item {
-
-	public final static String name = "RandomItem";
-	public ItemRandomItem() {
-		super();
-	}
-
-	@Override
-	public Item clone() {
-		return new ItemRandomItem();
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void makeEffect(Game gui, Ball b) {
-		int n = (int)(Math.random()*Items.ITEM_POOL.size());
-		Item t = Items.ITEM_POOL.get(n).clone();
-		t.setX(super.getX());
-		t.setY(super.getY());
-		t.makeEffect(gui, b);
-	}
-
-}
-=======
 import java.util.ArrayList;
 
 public class ItemRandomItem extends Item {
@@ -57,4 +27,3 @@ public class ItemRandomItem extends Item {
 	}
 
 }
->>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c

@@ -15,7 +15,7 @@ public class Sound extends Thread {
 	private static File hitYFile = new File("sounds/hitY.wav");
 	private static File hitPaddleFile = new File("sounds/hitPaddle.wav");
 	private static File winFile = new File("sounds/clap.wav");
-	private static File winLongFile = new File("sounds/clap.wav");
+	private static File winLongFile = new File("sounds/end.wav");
 	//private static File itemFile = new File("sounds/itemPop.wav");
 	private static File[] itemFile = {
 		new File("sounds/itemRandom.wav"),

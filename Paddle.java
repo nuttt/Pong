@@ -12,7 +12,6 @@ public class Paddle implements Runnable {
 	int shockInterval;
 	int ghostInterval;
 	Object hit = new Object();
-<<<<<<< HEAD
 	
 	public synchronized int getGhostInterval() {
 		return ghostInterval;
@@ -21,24 +20,21 @@ public class Paddle implements Runnable {
 		this.ghostInterval = ghostInterval;
 	}
 	
-=======
 	private boolean onMagnet = false;
 	private boolean shocked = false;
 	
-	
 	public boolean isShocked() {
-		return shocked;
+		if(shockInterval > 0)
+			return true;
+		return false;
 	}
-	public void setShocked(boolean shock) {
-		this.shocked = shock;
-	}
+
 	public boolean isOnMagnet() {
-		return onMagnet;
+		if(magnetCount > 0)
+			return true;
+		return false;
 	}
-	public void setOnMagnet(boolean isOnMagnet) {
-		this.onMagnet = isOnMagnet;
-	}
->>>>>>> Sound for each effect added
+
 	public Object getHit() {
 		return hit;
 	}
@@ -100,20 +96,14 @@ public class Paddle implements Runnable {
 					e.printStackTrace();
 				}
 			}
-<<<<<<< HEAD
+
 			if(ghostInterval > 0)
 			{
 				ghostInterval -= 10;
 			}
 			if(shockInterval > 0)
 			{
-=======
-			if(shockInterval > 0){
->>>>>>> Sound for each effect added
 				shockInterval -= 10;
-				if(shockInterval == 0){
-					setShocked(false);
-				}
 			}
 			else
 			{
@@ -229,9 +219,6 @@ public class Paddle implements Runnable {
 	{
 		if(magnetCount > 0){
 			magnetCount --;
-			if(magnetCount == 0){
-				setOnMagnet(false);
-			}
 		}
 	}
 	
@@ -254,11 +241,10 @@ public class Paddle implements Runnable {
 		this.shockInterval = shockInterval;
 		
 	}
-<<<<<<< HEAD
-
-=======
-	public void ToggleGhost() {
-		this.ghost = !this.ghost;
+	
+	public boolean isGhost(){
+		if(ghostInterval > 0)
+			return true;
+		return false;
 	}
->>>>>>> Sound for each effect added
 }

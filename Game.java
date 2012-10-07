@@ -278,24 +278,14 @@ public class Game implements Runnable {
 			if(paddle1.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 1;
-<<<<<<< HEAD
-				//System.out.println("player1 wins");
-				//Sound.playLongFull();
-=======
 				System.out.println("player1 wins");
 				Sound.playLongFull();
->>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 			}
 			else if(paddle2.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 2;
-<<<<<<< HEAD
-				//System.out.println("player2 wins");
-				//Sound.playLongFull();
-=======
 				System.out.println("player2 wins");
 				Sound.playLongFull();
->>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 			}
 			
 			// Check Pause game
