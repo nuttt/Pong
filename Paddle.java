@@ -7,6 +7,7 @@ public class Paddle implements Runnable {
 	int length;
 	int player;
 	int score;
+	int magnetCount;
 	boolean ghost;
 	
 	public void increaseScore(){
@@ -39,6 +40,7 @@ public class Paddle implements Runnable {
 		else if (player == 2)
 			x = gui.getGUIWidth() - 50;
 		ghost = false;
+		magnetCount = 0;
 	}
 
 	@Override
@@ -115,8 +117,8 @@ public class Paddle implements Runnable {
 		return thick;
 	}
 	
-	public synchronized boolean isRangeY(double y) {
-		if( y > this.y - this.length/2 && y < this.y + this.length/2)
+	public synchronized boolean isRangeY(double y, double radius) {
+		if( y > this.y - this.length/2 - radius && y < this.y + this.length/2 + radius)
 			return true;
 		return false;
 	}
@@ -149,8 +151,14 @@ public class Paddle implements Runnable {
 			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2))*((Math.random()+1)/2);
 			double dx = Math.cos(theta)*v;
 			double dy = Math.sin(theta)*v;
+			if(s.x > gui.getGUIWidth()/2)
+				dx = -dx;
 			System.out.println((x+thick+b.getRadius())+" "+(y+s.getDiffY()));
-			Ball ball = new Ball(this.x+this.thick+b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
+			Ball ball;
+			if(s.x > gui.getGUIWidth()/2)
+				ball = new Ball(this.x-this.thick-b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
+			else
+				ball = new Ball(this.x+this.thick+b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
 			balls.add(ball);
 			snapBall.remove(snapBall.size()-1);
 		}
@@ -160,5 +168,18 @@ public class Paddle implements Runnable {
 	}
 	public synchronized void setGhost(boolean ghost) {
 		this.ghost = ghost;
+	}
+	public synchronized int getMagnetCount() {
+		return magnetCount;
+	}
+	public synchronized void setMagnetCount(int magnetCount) {
+		this.magnetCount = magnetCount;
+		System.out.println("paddle" + player + "set magnet to" + this.magnetCount);
+	}
+	
+	public synchronized void decreaseMagnetCount()
+	{
+		if(magnetCount > 0)
+			magnetCount --;
 	}
 }

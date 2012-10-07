@@ -86,91 +86,112 @@ public class Balls implements Runnable {
 						+ paddle1.getThick()
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
-						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
+						&& paddle1.isRangeY(b.getY(),b.getRadius()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
 					hit.stop();
 					hit.play();
 					b.setOwner(1);
 					b.setDash(false);
 					b.setBetray(false);
-					double x = paddle1.getLength()
-							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
-					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
-					double phi = -Math.atan(b.getDY() / b.getDX());
-					double phi2;
-					// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
-					if (theta == 0)
-						phi2 = phi;
-					else if (theta > 0) {
-						if (phi >= theta)
-							phi2 = (Math.toRadians(90) + phi) / 2;
-						else
-							phi2 = (phi + theta) / 2;
-					} else {
-						if (phi <= theta)
-							phi2 = (Math.toRadians(-90) + phi) / 2;
-						else
-							phi2 = (phi + theta) / 2;
+					System.out.println("Magnet: "+paddle1.getMagnetCount());
+					if(paddle1.getMagnetCount() > 0)
+					{
+						paddle1.decreaseMagnetCount();
+						paddle1.addSnapBall(b.getY()-paddle1.getY());
+						ballList.remove(i--);
+						continue;
 					}
-					if (phi > Math.toRadians(MAXIMUM_ANGLE))
-						phi = Math.toRadians(MAXIMUM_ANGLE);
-					if (phi < Math.toRadians(-MAXIMUM_ANGLE))
-						phi = Math.toRadians(-MAXIMUM_ANGLE);
-					/*
-					 * if(Math.abs(phi) < Math.toRadians(5)) phi =
-					 * Math.toRadians(Math.random()*10-5);
-					 */
-					// System.out.println("phi2: "+Math.toDegrees(phi2));
-					double v = Math.sqrt(Math.pow(b.getDX(), 2)
-							+ Math.pow(b.getDY(), 2));
-					b.setDX(Math.cos(phi2) * v);
-					b.setDY(Math.sin(phi2) * v);
+					else
+					{
+						double x = paddle1.getLength()
+								/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
+						double theta = Math.atan((b.getY() - paddle1.getY()) / x);
+						double phi = -Math.atan(b.getDY() / b.getDX());
+						double phi2;
+						// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+						if (theta == 0)
+							phi2 = phi;
+						else if (theta > 0) {
+							if (phi >= theta)
+								phi2 = (Math.toRadians(90) + phi) / 2;
+							else
+								phi2 = (phi + theta) / 2;
+						} else {
+							if (phi <= theta)
+								phi2 = (Math.toRadians(-90) + phi) / 2;
+							else
+								phi2 = (phi + theta) / 2;
+						}
+						if (phi > Math.toRadians(MAXIMUM_ANGLE))
+							phi = Math.toRadians(MAXIMUM_ANGLE);
+						if (phi < Math.toRadians(-MAXIMUM_ANGLE))
+							phi = Math.toRadians(-MAXIMUM_ANGLE);
+						/*
+						 * if(Math.abs(phi) < Math.toRadians(5)) phi =
+						 * Math.toRadians(Math.random()*10-5);
+						 */
+						// System.out.println("phi2: "+Math.toDegrees(phi2));
+						double v = Math.sqrt(Math.pow(b.getDX(), 2)
+								+ Math.pow(b.getDY(), 2));
+						b.setDX(Math.cos(phi2) * v);
+						b.setDY(Math.sin(phi2) * v);
+					}
 				}
 
 				/*
 				 * Paddle2 Bounce
 				 */
-				if (b.getX() + b.getRadius() <= paddle2.getX()
+				else if (b.getX() + b.getRadius() <= paddle2.getX()
 						+ paddle2.getThick()
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
-						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
+						&& paddle2.isRangeY(b.getY(),b.getRadius()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
 					b.setDash(false);
 					b.setBetray(false);
 					hit.stop();
 					hit.play();
 					b.setOwner(2);
-					double x = paddle2.getLength()
-							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
-					double theta = Math.atan((b.getY() - paddle2.getY()) / x);
-					double phi = -Math.atan(b.getDY() / b.getDX());
-					double phi2;
-					 System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
-					if (theta == 0)
-						phi2 = phi;
-					else if (theta > 0) {
-						if (phi >= theta)
-							phi2 = phi;
-						else
-							phi2 = (phi + theta) / 2;
-					} else {
-						if (phi <= theta)
-							phi2 = phi;
-						else
-							phi2 = (phi + theta) / 2;
+					if(paddle2.getMagnetCount() > 0)
+					{
+						paddle2.decreaseMagnetCount();
+						paddle2.addSnapBall(b.getY()-paddle2.getY());
+						ballList.remove(i--);
+						continue;
 					}
-					if (phi > Math.toRadians(MAXIMUM_ANGLE))
-						phi = Math.toRadians(MAXIMUM_ANGLE);
-					if (phi < Math.toRadians(-MAXIMUM_ANGLE))
-						phi = Math.toRadians(-MAXIMUM_ANGLE);
-					if (Math.abs(phi) < Math.toRadians(5))
-						phi = Math.toRadians(Math.random() * 10 - 5);
-					// System.out.println("phi2: "+Math.toDegrees(phi2));
-					double v = Math.sqrt(Math.pow(b.getDX(), 2)
-							+ Math.pow(b.getDY(), 2));
-					b.setDX(-Math.cos(phi2) * v);
-					b.setDY(Math.sin(phi2) * v);
+					else
+					{
+						double x = paddle2.getLength()
+								/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
+						double theta = Math.atan((b.getY() - paddle2.getY()) / x);
+						double phi = -Math.atan(b.getDY() / b.getDX());
+						double phi2;
+						 System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+						if (theta == 0)
+							phi2 = phi;
+						else if (theta > 0) {
+							if (phi >= theta)
+								phi2 = phi;
+							else
+								phi2 = (phi + theta) / 2;
+						} else {
+							if (phi <= theta)
+								phi2 = phi;
+							else
+								phi2 = (phi + theta) / 2;
+						}
+						if (phi > Math.toRadians(MAXIMUM_ANGLE))
+							phi = Math.toRadians(MAXIMUM_ANGLE);
+						if (phi < Math.toRadians(-MAXIMUM_ANGLE))
+							phi = Math.toRadians(-MAXIMUM_ANGLE);
+						if (Math.abs(phi) < Math.toRadians(5))
+							phi = Math.toRadians(Math.random() * 10 - 5);
+						// System.out.println("phi2: "+Math.toDegrees(phi2));
+						double v = Math.sqrt(Math.pow(b.getDX(), 2)
+								+ Math.pow(b.getDY(), 2));
+						b.setDX(-Math.cos(phi2) * v);
+						b.setDY(Math.sin(phi2) * v);
+					}
 				}
 
 				/*
@@ -240,6 +261,14 @@ public class Balls implements Runnable {
 									paddle1.setGhost(true);
 								else
 									paddle2.setGhost(true);
+							}
+							else if(p instanceof ItemMagnet)
+							{
+								itemList.remove(j--);
+								if(b.owner == 1)
+									paddle1.setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
+								else
+									paddle2.setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
 							}
 						}
 					} catch (NullPointerException e) {

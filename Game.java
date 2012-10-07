@@ -149,12 +149,23 @@ public class Game implements Runnable {
 						getPlayerCoordinate(2)));
 				drawPanel.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent arg0) {
-						if(!Game.isPaused) Game.isPaused = true;
-						else if(Game.isPaused) {
-							Game.isPaused = false;
-							//Resume
-							synchronized (Game.lockPause) {
-								Game.lockPause.notifyAll();
+						synchronized(this)
+						{
+							if(!arg0.isAltDown())
+							{
+								if(!Game.isPaused) Game.isPaused = true;
+								else if(Game.isPaused) {
+									Game.isPaused = false;
+									//Resume
+									synchronized (Game.lockPause) {
+										Game.lockPause.notifyAll();
+									}
+								}
+							}
+							else
+							{
+								paddle1.fireSnapBall();
+								paddle2.fireSnapBall();
 							}
 						}
 					}
@@ -196,10 +207,11 @@ public class Game implements Runnable {
 				paddle1.setGhost(false);
 				paddle2.setGhost(false);
 				//TODO Rule for snapball
-				paddle1.addDefaultSnapBall();
+				if(paddle1.score < paddle2.score || paddle1.score == paddle2.score && Math.random() < 0.5)
+					paddle1.addDefaultSnapBall();
+				else
+					paddle2.addDefaultSnapBall();
 			}
-			if(Math.random() > 0.9888)
-				paddle1.fireSnapBall();
 			drawPanel.repaint();
 			try {
 				Thread.sleep(10);

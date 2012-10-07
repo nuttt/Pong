@@ -98,6 +98,7 @@ public class DrawPanel extends JPanel {
 					else if (p instanceof ItemRandom) g.drawImage(itemsPic[4], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					
 					else if (p instanceof ItemGhost) g.drawImage(itemsPic[8], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemMagnet) g.drawImage(itemsPic[9], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 				} catch (NullPointerException e) {
 					break;
 				}
@@ -151,11 +152,20 @@ public class DrawPanel extends JPanel {
 		 * SnapBall
 		 */
 		ArrayList<SnapBall> snap1 = paddle1.getSnapBall();
+		ArrayList<SnapBall> snap2 = paddle2.getSnapBall();
 		SnapBall s;
-		for (int i = 0; i < snap1.size(); i++) {
-			s = snap1.get(i);
-			//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
-			g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius())-3, null);
+		synchronized(this)
+		{
+			for (int i = 0; i < snap1.size(); i++) {
+				s = snap1.get(i);
+				//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
+				g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius()+s.getDiffY())-3, null);
+			}
+			for (int i = 0; i < snap2.size(); i++) {
+				s = snap2.get(i);
+				//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
+				g.drawImage(ballBlueMedium, (int)(paddle2.getX()-paddle2.getThick()-3-s.getRadius()*2), (int)(int)(paddle2.getY()-s.getRadius()+s.getDiffY())-3, null);
+			}
 		}
 		
 		/*
