@@ -244,6 +244,7 @@ public class Game implements Runnable {
 		drawPanel.setPreferredSize(new Dimension(GUI_WIDTH, GUI_HEIGHT));
 		frame.pack();
 		frame.setVisible(true);
+		Sound.playSoundBg();
 		
 	}
 
@@ -253,7 +254,7 @@ public class Game implements Runnable {
 		//TODO ItemList
 
 		// TODO Vee fix sound
-		//Sound.playSoundBg();
+		
 		Game game = new Game();
 		game.setShadowMode(true);
 		game.createGUI();
