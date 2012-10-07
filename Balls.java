@@ -200,6 +200,7 @@ public class Balls implements Runnable {
 						if (Tools.distance2D(b.getX(), b.getY(), p.getX(),
 								p.getY()) < p.getRadius() + b.getRadius()) {
 							// Item Collision
+							Items.itemArea[((int)p.getX()-200)/150][((int)p.getY()-120)/150] = false;
 							itemList.remove(j--);
 							p.makeEffect(gui, b);
 						}

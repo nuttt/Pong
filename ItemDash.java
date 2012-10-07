@@ -2,7 +2,7 @@
 public class ItemDash extends Item {
 
 	public final static String name = "Dash";
-	public final static double DASH_FACTOR = 1.5;
+	public final static double DASH_FACTOR = 1.8;
 	public ItemDash() {
 		// TODO Auto-generated constructor stub
 		super();

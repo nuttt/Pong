@@ -21,9 +21,9 @@ public class ItemGhost extends Item {
 	public void makeEffect(Game gui, Ball b) {
 		
 		if(b.owner == 1)
-			gui.getPaddle1().setGhost(true);
+			gui.getPaddle1().ToggleGhost();
 		else
-			gui.getPaddle2().setGhost(true);
+			gui.getPaddle2().ToggleGhost();
 	}
 
 }

@@ -211,4 +211,8 @@ public class Paddle implements Runnable {
 		this.shockInterval = shockInterval;
 		
 	}
+	public void ToggleGhost() {
+		// TODO Auto-generated method stub
+		this.ghost = !this.ghost;
+	}
 }
