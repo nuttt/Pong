@@ -26,6 +26,12 @@ public class Items implements Runnable {
 	public void run() {
 		while (true) {
 			// Check if Paused
+			try {
+				Thread.sleep(ITEM_INTERVAL);
+				ITEM_INTERVAL = (int)(Math.random()*5000+1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			synchronized (Game.lockPause) {
 				if(Game.isPaused())
 					try {
@@ -42,12 +48,7 @@ public class Items implements Runnable {
 					itemList.add(t);
 					Sound.playItem();
 			}
-			try {
-				Thread.sleep(ITEM_INTERVAL);
-				ITEM_INTERVAL = (int)(Math.random()*5000+1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			
 		}
 	}
 	

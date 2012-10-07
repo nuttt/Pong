@@ -156,7 +156,7 @@ public class Paddle implements Runnable {
 			if(Math.abs(theta) < Math.toRadians(10))
 				theta = Math.toRadians(Math.random()*20-10);
 			System.out.println(theta);
-			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2))*((Math.random()+1)/2);
+			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
 			double dx = Math.cos(theta)*v;
 			double dy = Math.sin(theta)*v;
 			if(s.x > gui.getGUIWidth()/2)
