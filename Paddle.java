@@ -52,7 +52,7 @@ public class Paddle implements Runnable {
 		while (true) {
 			// Check if Paused
 			synchronized (Game.lockPause) {
-				if(Game.isPaused)
+				if(Game.isPaused())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {

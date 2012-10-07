@@ -171,7 +171,7 @@ public class DrawPanel extends JPanel {
 		/*
 		 * If Pause, show pause window
 		 */
-		if(Game.isPaused){
+		if(Game.isPaused()){
 			g.drawImage(pauseBg, 0, 0, null);
 		}
 		

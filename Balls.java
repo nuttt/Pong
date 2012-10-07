@@ -3,10 +3,7 @@ import java.util.ArrayList;
 public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
-	hit1 hit = new hit1();
-	SoundHitY soundHitY = new SoundHitY();
-	SoundHitPaddle soundHitPaddle = new SoundHitPaddle();
-	final static int MAXIMUM_ANGLE = 70;
+	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
 		ballList = new ArrayList<Ball>();
@@ -37,7 +34,7 @@ public class Balls implements Runnable {
 		while (true) {
 			// Check if Paused
 			synchronized (Game.lockPause) {
-				if(Game.isPaused)
+				if(Game.isPaused())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {
@@ -46,12 +43,7 @@ public class Balls implements Runnable {
 			}
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
-				if(b.isDash())
-					b.setX(b.getX() + b.getDX()*ItemDash.DASH_FACTOR);
-				else if(b.isBetray())
-					b.setX(b.getX() + b.getDX()*ItemBetray.BETRAY_FACTOR);
-				else
-					b.setX(b.getX() + b.getDX());
+				b.setX(b.getX() + b.getDX());
 				b.setY(b.getY() + b.getDY());
 				// TODO Remove X Bounce
 				/*
@@ -60,12 +52,14 @@ public class Balls implements Runnable {
 				if (b.getX() - b.getRadius() < 0){
 					if(ballList.size() == 1){
 						paddle2.increaseScore();
+						Sound.playWin();
 					}
 					b.setDead(true);
 				}
 				if(b.getX() + b.getRadius() > gui.getGUIWidth()) {
 					if(ballList.size() == 1){
 						paddle1.increaseScore();
+						Sound.playWin();
 					}
 					b.setDead(true);
 				}
@@ -76,8 +70,7 @@ public class Balls implements Runnable {
 						|| b.getY() + b.getRadius() > gui.getGUIHeight()
 						&& b.getDY() > 0) {
 					b.setDY(-b.getDY());
-					hit.stop();
-					hit.play();
+					Sound.playHitY();
 				}
 				/*
 				 * Paddle Bounce
@@ -86,6 +79,7 @@ public class Balls implements Runnable {
 						+ paddle1.getThick()
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
+<<<<<<< HEAD
 						&& paddle1.isRangeY(b.getY(),b.getRadius()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
 					hit.stop();
@@ -135,6 +129,29 @@ public class Balls implements Runnable {
 								+ Math.pow(b.getDY(), 2));
 						b.setDX(Math.cos(phi2) * v);
 						b.setDY(Math.sin(phi2) * v);
+=======
+						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
+					Sound.playHitPaddle();
+					b.setOwner(1);
+					double x = paddle1.getLength()
+							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
+					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
+					double phi = -Math.atan(b.getDY() / b.getDX());
+					double phi2;
+					// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+					if (theta == 0)
+						phi2 = phi;
+					else if (theta > 0) {
+						if (phi >= theta)
+							phi2 = (Math.toRadians(90) + phi) / 2;
+						else
+							phi2 = (phi + theta) / 2;
+					} else {
+						if (phi <= theta)
+							phi2 = (Math.toRadians(-90) + phi) / 2;
+						else
+							phi2 = (phi + theta) / 2;
+>>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 					}
 				}
 
@@ -145,12 +162,17 @@ public class Balls implements Runnable {
 						+ paddle2.getThick()
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
+<<<<<<< HEAD
 						&& paddle2.isRangeY(b.getY(),b.getRadius()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
 					b.setDash(false);
 					b.setBetray(false);
 					hit.stop();
 					hit.play();
+=======
+						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
+					Sound.playHitPaddle();
+>>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 					b.setOwner(2);
 					if(paddle2.getMagnetCount() > 0)
 					{
@@ -220,6 +242,7 @@ public class Balls implements Runnable {
 								itemList.remove(j--);
 								ballList.add(b2);
 							}
+<<<<<<< HEAD
 							else if(p instanceof ItemDash)
 							{
 								itemList.remove(j--);
@@ -270,6 +293,8 @@ public class Balls implements Runnable {
 								else
 									paddle2.setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
 							}
+=======
+>>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 						}
 					} catch (NullPointerException e) {
 						break;

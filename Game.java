@@ -1,9 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.*;
-
 /*
  * Main Class for Game GUI
  */
@@ -20,7 +18,7 @@ public class Game implements Runnable {
 	private Paddle paddle1, paddle2;
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
-	public static boolean isPaused = false;
+	private static boolean paused = false;
 	public static Object lockPause = new Object();
 
 	private Balls balls;
@@ -36,6 +34,14 @@ public class Game implements Runnable {
 	 */	
 	public DrawPanel getDrawPanel() {
 		return drawPanel;
+	}
+
+	public static boolean isPaused() {
+		return paused;
+	}
+
+	public static void setPaused(boolean paused) {
+		Game.paused = paused;
 	}
 
 	public boolean isAIMode() {
@@ -149,6 +155,7 @@ public class Game implements Runnable {
 						getPlayerCoordinate(2)));
 				drawPanel.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent arg0) {
+<<<<<<< HEAD
 						synchronized(this)
 						{
 							if(!arg0.isAltDown())
@@ -166,6 +173,14 @@ public class Game implements Runnable {
 							{
 								paddle1.fireSnapBall();
 								paddle2.fireSnapBall();
+=======
+						if(!Game.isPaused()) Game.setPaused(true);
+						else if(Game.isPaused()) {
+							Game.setPaused(false);
+							//Resume
+							synchronized (Game.lockPause) {
+								Game.lockPause.notifyAll();
+>>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 							}
 						}
 					}
@@ -194,7 +209,7 @@ public class Game implements Runnable {
 		 */
 		while (true) {
 			synchronized (Game.lockPause) {
-				if(Game.isPaused)
+				if(Game.isPaused())
 					try {
 						drawPanel.repaint();
 						Game.lockPause.wait();
@@ -236,12 +251,13 @@ public class Game implements Runnable {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		//TODO ImagePool
 		//TODO change test image
 		//TODO ItemList
 
 		// TODO Main
+		Sound.playSoundBg();
 		Game game = new Game();
 		game.setShadowMode(true);
 		game.createGUI();
