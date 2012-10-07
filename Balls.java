@@ -3,10 +3,7 @@ import java.util.ArrayList;
 public class Balls implements Runnable {
 	ArrayList<Ball> ballList;
 	Game gui;
-	hit1 hit = new hit1();
-	SoundHitY soundHitY = new SoundHitY();
-	SoundHitPaddle soundHitPaddle = new SoundHitPaddle();
-	final static int MAXIMUM_ANGLE = 70;
+	final static int MAXIMUM_ANGLE = 60;
 
 	public Balls(Game game) {
 		ballList = new ArrayList<Ball>();
@@ -37,7 +34,7 @@ public class Balls implements Runnable {
 		while (true) {
 			// Check if Paused
 			synchronized (Game.lockPause) {
-				if(Game.isPaused)
+				if(Game.isPaused())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {
@@ -46,12 +43,7 @@ public class Balls implements Runnable {
 			}
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
-				if(b.isDash())
-					b.setX(b.getX() + b.getDX()*ItemDash.DASH_FACTOR);
-				else if(b.isBetray())
-					b.setX(b.getX() + b.getDX()*ItemBetray.BETRAY_FACTOR);
-				else
-					b.setX(b.getX() + b.getDX());
+				b.setX(b.getX() + b.getDX());
 				b.setY(b.getY() + b.getDY());
 				// TODO Remove X Bounce
 				/*
@@ -60,12 +52,14 @@ public class Balls implements Runnable {
 				if (b.getX() - b.getRadius() < 0){
 					if(ballList.size() == 1){
 						paddle2.increaseScore();
+						Sound.playWin();
 					}
 					b.setDead(true);
 				}
 				if(b.getX() + b.getRadius() > gui.getGUIWidth()) {
 					if(ballList.size() == 1){
 						paddle1.increaseScore();
+						Sound.playWin();
 					}
 					b.setDead(true);
 				}
@@ -76,8 +70,7 @@ public class Balls implements Runnable {
 						|| b.getY() + b.getRadius() > gui.getGUIHeight()
 						&& b.getDY() > 0) {
 					b.setDY(-b.getDY());
-					hit.stop();
-					hit.play();
+					Sound.playHitY();
 				}
 				/*
 				 * Paddle Bounce
@@ -87,12 +80,8 @@ public class Balls implements Runnable {
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
-					System.out.println("Hit paddle1");
-					hit.stop();
-					hit.play();
+					Sound.playHitPaddle();
 					b.setOwner(1);
-					b.setDash(false);
-					b.setBetray(false);
 					double x = paddle1.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
 					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
@@ -135,11 +124,7 @@ public class Balls implements Runnable {
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
-					System.out.println("Hit paddle2");
-					b.setDash(false);
-					b.setBetray(false);
-					hit.stop();
-					hit.play();
+					Sound.playHitPaddle();
 					b.setOwner(2);
 					double x = paddle2.getLength()
 							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
@@ -198,48 +183,6 @@ public class Balls implements Runnable {
 										* Math.sin(theta2), b.getRadius());
 								itemList.remove(j--);
 								ballList.add(b2);
-							}
-							else if(p instanceof ItemDash)
-							{
-								itemList.remove(j--);
-								if(b.getDX() < 0)
-									b.setDX(-b.getVelocity());
-								else
-									b.setDX(+b.getVelocity());
-								b.setDY(0);
-								b.setDash(true);
-							}
-							else if(p instanceof ItemBetray)
-							{
-								itemList.remove(j--);
-								if(b.getDX() < 0)
-									b.setDX(b.getVelocity());
-								else
-									b.setDX(-b.getVelocity());
-								b.setDY(0);
-								b.setBetray(true);
-							}
-							else if(p instanceof ItemRandom)
-							{
-								itemList.remove(j--);
-								double theta3;
-								while (true) {
-									theta3 = Math.random() * 360 - 180;
-									if (Math.abs(theta3) < MAXIMUM_ANGLE)
-										break;
-								}
-								theta3 = Math.toRadians(theta3);
-								double v = b.getVelocity();
-								b.setDX(v*Math.cos(theta3));
-								b.setDY(v*Math.sin(theta3));
-							}
-							else if(p instanceof ItemGhost)
-							{
-								itemList.remove(j--);
-								if(b.owner == 1)
-									paddle1.setGhost(true);
-								else
-									paddle2.setGhost(true);
 							}
 						}
 					} catch (NullPointerException e) {
