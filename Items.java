@@ -9,7 +9,6 @@ public class Items implements Runnable {
 	public static boolean itemArea[][] = new boolean[5][4];
 
 	public Items() {
-		// TODO Auto-generated constructor stub
 		Items.ITEM_POOL.add(new ItemSplit());
 		Items.ITEM_POOL.add(new ItemDash());
 		Items.ITEM_POOL.add(new ItemBetray());
@@ -69,7 +68,7 @@ public class Items implements Runnable {
 						System.out.println("");
 					}
 					itemList.add(t);
-					Sound.playItem();
+					Sound.playItem(11);
 			}
 			
 		}

@@ -16,7 +16,21 @@ public class Sound extends Thread {
 	private static File hitPaddleFile = new File("sounds/hitPaddle.wav");
 	private static File winFile = new File("sounds/clap.wav");
 	private static File winLongFile = new File("sounds/clap.wav");
-	private static File itemFile = new File("sounds/itemPop.wav");
+	//private static File itemFile = new File("sounds/itemPop.wav");
+	private static File[] itemFile = {
+		new File("sounds/itemRandom.wav"),
+		new File("sounds/itemSplit.wav"),
+		new File("sounds/itemDash.wav"),
+		new File("sounds/itemBetray.wav"),
+		new File("sounds/itemRandom.wav"),
+		new File("sounds/itemFast.wav"),
+		new File("sounds/itemLong.wav"),
+		new File("sounds/itemShort.wav"),
+		new File("sounds/itemReverse.wav"),
+		new File("sounds/itemMagnet.wav"),
+		new File("sounds/itemShock.wav"),
+		new File("sounds/itemPop.wav")
+		};
 	
 	
 	public static void playSoundBg(){
@@ -74,10 +88,10 @@ public class Sound extends Thread {
 			e.printStackTrace();
 		}
 	}
-	public static void playItem(){
-		try {
+	public static void playItem(int i){
+		try {			
 			Clip clip = AudioSystem.getClip();
-			AudioInputStream soundFile = AudioSystem.getAudioInputStream(itemFile);
+			AudioInputStream soundFile = AudioSystem.getAudioInputStream(itemFile[i]);
 			clip.open(soundFile);
 			clip.loop(0);
 		} catch (LineUnavailableException | UnsupportedAudioFileException

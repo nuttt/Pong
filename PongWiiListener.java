@@ -54,8 +54,10 @@ public class PongWiiListener implements WiimoteListener {
 		}
 		if(arg0.isButtonBJustPressed())
 		{
-			if(!Game.isPaused()) Game.setPaused(true);
-			else if(Game.isPaused()) {
+			if(!Game.isPaused() && Game.isStarted()){
+				Game.setPaused(true);
+			}
+			else if(Game.isPaused() && Game.isStarted()) {
 				Game.setPaused(false);
 				//Resume
 				synchronized (Game.lockPause) {

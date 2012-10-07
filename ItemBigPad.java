@@ -19,7 +19,6 @@ public class ItemBigPad extends Item {
 
 	@Override
 	public void makeEffect(Game gui, Ball b) {
-		// TODO Auto-generated method stub
 		if(b.owner == 1)
 		{
 			gui.getPaddle1().IncreaseLength();
@@ -28,6 +27,7 @@ public class ItemBigPad extends Item {
 		{
 			gui.getPaddle2().IncreaseLength();
 		}
+		Sound.playItem(6);
 	}
 
 }
