@@ -10,7 +10,10 @@ public class Paddle implements Runnable {
 	int magnetCount;
 	int shockInterval;
 	boolean ghost;
-	
+	Object hit = new Object();
+	public Object getHit() {
+		return hit;
+	}
 	public void increaseScore(){
 		this.score++;
 	}
@@ -153,8 +156,8 @@ public class Paddle implements Runnable {
 			Ball b = (Ball)s;
 			double x = getLength() / Math.tan(Math.toRadians(Balls.MAXIMUM_ANGLE)) / 2;
 			double theta = Math.atan((s.getDiffY()) / x);
-			if(Math.abs(theta) < Math.toRadians(10))
-				theta = Math.toRadians(Math.random()*20-10);
+//			if(Math.abs(theta) < Math.toRadians(10))
+//				theta = Math.toRadians(Math.random()*20-10);
 			System.out.println(theta);
 			double v = Math.sqrt(Math.pow(b.getDX(), 2)+Math.pow(b.getDY(), 2));
 			double dx = Math.cos(theta)*v;

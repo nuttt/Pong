@@ -4,7 +4,7 @@ public class Items implements Runnable {
 
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	public static ArrayList<Item> ITEM_POOL = new ArrayList<Item>();
-	public static int MAXIMUM_ITEM = 5;
+	public static int MAXIMUM_ITEM = 4;
 	public static int ITEM_INTERVAL = 4000;
 	public static boolean itemArea[][] = new boolean[5][4];
 

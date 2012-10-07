@@ -6,6 +6,9 @@ import javax.swing.*;
  * Main Class for Game GUI
  */
 
+import wiiusej.WiiUseApiManager;
+import wiiusej.Wiimote;
+
 public class Game implements Runnable {
 	/*
 	 * AI Mode: 1 Player, Player 2 is AI isWiiMote: set using WiiMote or Mouse
@@ -20,6 +23,7 @@ public class Game implements Runnable {
 	public final static int GUI_HEIGHT = 700;
 	private static boolean paused = false;
 	public static Object lockPause = new Object();
+	public static Wiimote[] wiimotes;
 
 	private Balls balls;
 	private Items items;
@@ -116,6 +120,10 @@ public class Game implements Runnable {
 		return items;
 	}
 
+	public synchronized Wiimote[] getWiimotes() {
+		return wiimotes;
+	}
+
 	public Game() {
 		drawPanel = new DrawPanel(this);
 		/*
@@ -147,6 +155,10 @@ public class Game implements Runnable {
 			}
 		} else {
 			if (isWiiMote()) {
+				wiimotes = WiiUseApiManager.getWiimotes(1, true);
+				wiimotes[0].activateIRTRacking();
+				wiimotes[0].activateMotionSensing();
+				wiimotes[0].addWiiMoteEventListeners(new PongWiiListener(this, 1));
 
 			} else {
 				drawPanel.addMouseMotionListener(new PongMouseListener(
@@ -256,7 +268,7 @@ public class Game implements Runnable {
 		// TODO Vee fix sound
 		
 		Game game = new Game();
-		game.setShadowMode(true);
+		game.setWiiMote(true);
 		game.createGUI();
 		Thread gameThread = new Thread(game);
 		gameThread.start();
@@ -268,5 +280,7 @@ public class Game implements Runnable {
 		ballsThread.start();
 		Thread itemsThread = new Thread(game.getItems());
 		itemsThread.start();
+		Thread RumbleThread1 = new Thread(new Rumble(game,1));
+		RumbleThread1.start();
 	}
 }

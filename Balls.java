@@ -85,6 +85,12 @@ public class Balls implements Runnable {
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
 						&& paddle1.isRangeY(b.getY(),b.getRadius()) && b.getDX() < 0) {
+					if(gui.isWiiMote())
+					{
+						synchronized (paddle1.getHit()) {
+							paddle1.getHit().notifyAll();
+						}
+					}
 					System.out.println("Hit paddle1");
 					Sound.playHitPaddle();
 					b.setOwner(1);
