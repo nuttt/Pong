@@ -18,13 +18,11 @@ public class PongWiiListener implements WiimoteListener {
 	Game gui;
 	int player;
 	public PongWiiListener(Game gui, int player) {
-		// TODO Auto-generated constructor stub
 		this.gui = gui;
 	}
 
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent arg0) {
-		// TODO Auto-generated method stub
 		if(arg0.isButtonAJustPressed())
 		{
 			// Click to start the game
@@ -46,6 +44,7 @@ public class PongWiiListener implements WiimoteListener {
 			}
 			else if(Game.isStarted())
 			{
+				//TODO Make 2 Player Wiimote
 				//if(player == 1)
 					gui.getPaddle1().fireSnapBall();
 				//else if(player == 2)
@@ -68,44 +67,38 @@ public class PongWiiListener implements WiimoteListener {
 	@Override
 	public void onClassicControllerInsertedEvent(
 			ClassicControllerInsertedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onClassicControllerRemovedEvent(
 			ClassicControllerRemovedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onDisconnectionEvent(DisconnectionEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onExpansionEvent(ExpansionEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onGuitarHeroRemovedEvent(GuitarHeroRemovedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onIrEvent(IREvent arg0) {
-		// TODO Auto-generated method stub
+		//TODO 2 Player Wiimote
 		Coordinate p1 = gui.getPlayerCoordinate(1);
 		Coordinate p2 = gui.getPlayerCoordinate(2);
 		//System.out.println(arg0.getX() +" "+ arg0.getAy());
@@ -124,7 +117,6 @@ public class PongWiiListener implements WiimoteListener {
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0) {
-		// TODO Auto-generated method stub
 //		System.out.println(arg0.getRawAcceleration().getX());
 //		if(arg0.getRawAcceleration().getX() < 50)
 //		{
@@ -139,19 +131,16 @@ public class PongWiiListener implements WiimoteListener {
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onStatusEvent(StatusEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

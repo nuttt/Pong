@@ -169,9 +169,20 @@ public class Game implements Runnable {
 		balls = new Balls(this);
 		items = new Items();
 	}
+	
+	public void resetPaddleEffect()
+	{
+		paddle1.setGhostInterval(0);
+		paddle2.setGhostInterval(0);
+		paddle1.setMagnetCount(0);
+		paddle2.setMagnetCount(0);
+		paddle1.setShockInterval(0);
+		paddle1.setShockInterval(0);
+		paddle1.setDefaultLength();
+		paddle2.setDefaultLength();
+	}
 
 	public void run() {
-		// TODO Game Thread
 		/*
 		 * Select Input
 		 */
@@ -183,6 +194,7 @@ public class Game implements Runnable {
 			}
 		} else {
 			if (isWiiMote()) {
+				//TODO 2 Player Wiimote
 				wiimotes = WiiUseApiManager.getWiimotes(1, true);
 				wiimotes[0].activateIRTRacking();
 				//wiimotes[0].activateMotionSensing();
@@ -266,13 +278,13 @@ public class Game implements Runnable {
 			if(paddle1.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 1;
-				System.out.println("player1 wins");
+				//System.out.println("player1 wins");
 				//Sound.playLongFull();
 			}
 			else if(paddle2.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 2;
-				System.out.println("player2 wins");
+				//System.out.println("player2 wins");
 				//Sound.playLongFull();
 			}
 			
@@ -293,15 +305,7 @@ public class Game implements Runnable {
 				{
 					if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
 					{
-							paddle1.setGhostInterval(0);
-							paddle2.setGhostInterval(0);
-							paddle1.setMagnetCount(0);
-							paddle2.setMagnetCount(0);
-							paddle1.setShcokInterval(0);
-							paddle1.setShcokInterval(0);
-							paddle1.setDefaultLength();
-							paddle2.setDefaultLength();
-							//TODO Rule for snapball
+							resetPaddleEffect();
 							if(paddle1.score < paddle2.score || paddle1.score == paddle2.score && Math.random() < 0.5)
 								paddle1.addDefaultSnapBall();
 							else
@@ -318,10 +322,7 @@ public class Game implements Runnable {
 		}
 	}
 
-	
-
 	public void createGUI() {
-		// TODO GUI
 		JFrame.setDefaultLookAndFeelDecorated(false);
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -335,12 +336,6 @@ public class Game implements Runnable {
 	}
 
 	public static void main(String[] args) throws Exception{
-		//TODO ImagePool
-		//TODO change test image
-		//TODO ItemList
-
-		// TODO Vee fix sound
-		
 		Game game = new Game();
 		game.setWiiMote(true);
 		game.createGUI();
@@ -354,6 +349,7 @@ public class Game implements Runnable {
 		ballsThread.start();
 		Thread itemsThread = new Thread(game.getItems());
 		itemsThread.start();
+		//TODO 2 Player Wiimote
 		if(game.isWiiMote())
 		{
 			Thread RumbleThread1 = new Thread(new Rumble(game,1));

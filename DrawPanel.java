@@ -65,7 +65,6 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		// TODO Paint Graphics
 		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
 		g.drawImage(background, 0, 0, null);

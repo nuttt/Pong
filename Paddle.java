@@ -58,7 +58,6 @@ public class Paddle implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Paddle Thread
 		//shadow mode
 		Coordinate p;
 			p = gui.getPlayerCoordinate(player);
@@ -203,7 +202,7 @@ public class Paddle implements Runnable {
 			magnetCount --;
 	}
 	
-	public synchronized void IncreaseLength()
+	public synchronized void IncreseLength()
 	{
 		if(length == 103)
 			length = 151;
@@ -218,7 +217,7 @@ public class Paddle implements Runnable {
 		else if(length == 261)
 			length = 151;
 	}
-	public void setShcokInterval(int shockInterval) {
+	public void setShockInterval(int shockInterval) {
 		this.shockInterval = shockInterval;
 		
 	}

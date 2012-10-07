@@ -51,7 +51,6 @@ public class Balls implements Runnable {
 					factor *= ItemBetray.BETRAY_FACTOR;
 				b.setX(b.getX() + b.getDX() * factor);
 				b.setY(b.getY() + b.getDY());
-				// TODO Remove X Bounce
 				/*
 				 * X Bounce
 				 */
@@ -92,12 +91,12 @@ public class Balls implements Runnable {
 							paddle1.getHit().notifyAll();
 						}
 					}
-					System.out.println("Hit paddle1");
+					//System.out.println("Hit paddle1");
 					Sound.playHitPaddle();
 					b.setOwner(1);
 					b.setDash(false);
 					b.setBetray(false);
-					System.out.println("Magnet: "+paddle1.getMagnetCount());
+					//System.out.println("Magnet: "+paddle1.getMagnetCount());
 					if(paddle1.getMagnetCount() > 0)
 					{
 						paddle1.decreaseMagnetCount();
@@ -112,7 +111,7 @@ public class Balls implements Runnable {
 						double theta = Math.atan((b.getY() - paddle1.getY()) / x);
 						double phi = -Math.atan(b.getDY() / b.getDX());
 						double phi2;
-						// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+						// //System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
 						if (theta == 0)
 							phi2 = phi;
 						else if (theta > 0) {
@@ -134,7 +133,7 @@ public class Balls implements Runnable {
 						 * if(Math.abs(phi) < Math.toRadians(5)) phi =
 						 * Math.toRadians(Math.random()*10-5);
 						 */
-						// System.out.println("phi2: "+Math.toDegrees(phi2));
+						// //System.out.println("phi2: "+Math.toDegrees(phi2));
 						double v = Math.sqrt(Math.pow(b.getDX(), 2)
 								+ Math.pow(b.getDY(), 2));
 						b.setDX(Math.cos(phi2) * v);
@@ -150,7 +149,7 @@ public class Balls implements Runnable {
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
 						&& paddle2.isRangeY(b.getY(),b.getRadius()) && b.getDX() > 0) {
-					System.out.println("Hit paddle2");
+					//System.out.println("Hit paddle2");
 					b.setDash(false);
 					b.setBetray(false);
 					Sound.playHitPaddle();
@@ -169,7 +168,7 @@ public class Balls implements Runnable {
 						double theta = Math.atan((b.getY() - paddle2.getY()) / x);
 						double phi = -Math.atan(b.getDY() / b.getDX());
 						double phi2;
-						 System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
+						 //System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
 						if (theta == 0)
 							phi2 = phi;
 						else if (theta > 0) {
@@ -189,7 +188,7 @@ public class Balls implements Runnable {
 							phi = Math.toRadians(-MAXIMUM_ANGLE);
 						if (Math.abs(phi) < Math.toRadians(5))
 							phi = Math.toRadians(Math.random() * 10 - 5);
-						// System.out.println("phi2: "+Math.toDegrees(phi2));
+						// //System.out.println("phi2: "+Math.toDegrees(phi2));
 						double v = Math.sqrt(Math.pow(b.getDX(), 2)
 								+ Math.pow(b.getDY(), 2));
 						b.setDX(-Math.cos(phi2) * v);

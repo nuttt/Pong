@@ -9,7 +9,6 @@ public class Items implements Runnable {
 	public static boolean itemArea[][] = new boolean[5][4];
 
 	public Items() {
-		// TODO Auto-generated constructor stub
 		Items.ITEM_POOL.add(new ItemSplit());
 		Items.ITEM_POOL.add(new ItemDash());
 		Items.ITEM_POOL.add(new ItemBetray());
@@ -49,24 +48,24 @@ public class Items implements Runnable {
 					{
 						x = (int)(Math.random()*5);
 						y = (int)(Math.random()*4);
-						System.out.println("x"+x+" y"+y);
+						//System.out.println("x"+x+" y"+y);
 						if(itemArea[x][y] == false)
 						{
-							System.out.println("empty!");
+							//System.out.println("empty!");
 							t.setX(200+150*x);
 							t.setY(120+150*y);
 							itemArea[x][y] = true;
 							break;
 						}
 					}
-					System.out.println("place "+t.getName()+" at "+t.getX()+" "+t.getY());
+					//System.out.println("place "+t.getName()+" at "+t.getX()+" "+t.getY());
 					for(int ii = 0;ii < 4 ; ii++)
 					{
 						for(int jj = 0 ; jj < 5 ; jj++)
 						{
-							System.out.print(itemArea[jj][ii]+"\t");
+							//System.out.print(itemArea[jj][ii]+"\t");
 						}
-						System.out.println("");
+						//System.out.println("");
 					}
 					itemList.add(t);
 					Sound.playItem();

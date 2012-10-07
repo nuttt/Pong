@@ -18,10 +18,8 @@ public class Rumble implements Runnable{
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		// TODO Auto-generated method stub
 		Object hit = paddle.getHit();
 		while(true)
 		{
@@ -29,7 +27,6 @@ public class Rumble implements Runnable{
 				try {
 					hit.wait();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -38,7 +35,6 @@ public class Rumble implements Runnable{
 			try {
 				Thread.sleep(75);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Game.wiimotes[player-1].deactivateRumble();

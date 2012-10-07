@@ -9,7 +9,6 @@ public abstract class Item {
 	public final static double ITEM_BOUND_Y = 50;
 	Image icon;
 	public Item() {
-		// TODO Auto-generated constructor stub
 		x = (Math.random()*(Game.GUI_WIDTH-2*ITEM_BOUND_X))+ITEM_BOUND_X;
 		y = (Math.random()*(Game.GUI_HEIGHT-2*ITEM_BOUND_Y))+ITEM_BOUND_Y;
 		radius = DEFAULT_ITEM_REDIUS;

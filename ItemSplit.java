@@ -5,13 +5,11 @@ public class ItemSplit extends Item {
 
 	public final static String name = "Split";
 	public ItemSplit() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
 	@Override
 	public Item clone() {
-		// TODO Auto-generated method stub
 		return new ItemSplit();
 	}
 	
@@ -21,7 +19,6 @@ public class ItemSplit extends Item {
 
 	@Override
 	public void makeEffect(Game gui, Ball b) {
-		// TODO Auto-generated method stub
 		ArrayList<Ball> ballList = gui.getBalls().getList();
 		double v = b.getVelocity();
 		double theta2;

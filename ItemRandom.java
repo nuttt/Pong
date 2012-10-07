@@ -3,13 +3,11 @@ public class ItemRandom extends Item {
 
 	public final static String name = "Random";
 	public ItemRandom() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
 	@Override
 	public Item clone() {
-		// TODO Auto-generated method stub
 		return new ItemRandom();
 	}
 	
@@ -19,7 +17,6 @@ public class ItemRandom extends Item {
 
 	@Override
 	public void makeEffect(Game gui, Ball b) {
-		// TODO Auto-generated method stub
 		double theta3;
 		while (true) {
 			theta3 = Math.random() * 360 - 180;
