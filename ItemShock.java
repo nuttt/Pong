@@ -18,4 +18,13 @@ public class ItemShock extends Item {
 		return name;
 	}
 
+	@Override
+	public void makeEffect(Game gui, Ball b) {
+		// TODO Auto-generated method stub
+		if(b.owner == 1)
+			gui.getPaddle1().setShcokInterval(ItemShock.SHOCK_INTERVAL);
+		else
+			gui.getPaddle2().setShcokInterval(ItemShock.SHOCK_INTERVAL);
+	}
+
 }

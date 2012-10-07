@@ -18,4 +18,11 @@ public class ItemFast extends Item {
 		return name;
 	}
 
+	@Override
+	public void makeEffect(Game gui, Ball b) {
+		// TODO Auto-generated method stub
+		b.setDX(b.getDX()*ItemFast.FAST_FACTOR);
+		b.setDY(b.getDY()*ItemFast.FAST_FACTOR);
+	}
+
 }

@@ -42,4 +42,6 @@ public abstract class Item {
 	public abstract Item clone();
 	
 	public abstract String getName();
+	
+	public abstract void makeEffect(Game gui, Ball b);
 }

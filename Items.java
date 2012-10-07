@@ -9,15 +9,15 @@ public class Items implements Runnable {
 
 	public Items() {
 		// TODO Auto-generated constructor stub
-//		Items.ITEM_POOL.add(new ItemSplit());
-//		Items.ITEM_POOL.add(new ItemDash());
-//		Items.ITEM_POOL.add(new ItemBetray());
-//		Items.ITEM_POOL.add(new ItemRandom());
-//		Items.ITEM_POOL.add(new ItemFast());
-//		Items.ITEM_POOL.add(new ItemBigPad());
-//		Items.ITEM_POOL.add(new ItemSmallPad());
-//		Items.ITEM_POOL.add(new ItemGhost());
-//		Items.ITEM_POOL.add(new ItemMagnet());
+		Items.ITEM_POOL.add(new ItemSplit());
+		Items.ITEM_POOL.add(new ItemDash());
+		Items.ITEM_POOL.add(new ItemBetray());
+		Items.ITEM_POOL.add(new ItemRandom());
+		Items.ITEM_POOL.add(new ItemFast());
+		Items.ITEM_POOL.add(new ItemBigPad());
+		Items.ITEM_POOL.add(new ItemSmallPad());
+		Items.ITEM_POOL.add(new ItemGhost());
+		Items.ITEM_POOL.add(new ItemMagnet());
 		Items.ITEM_POOL.add(new ItemShock());
 		
 	}

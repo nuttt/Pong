@@ -167,6 +167,7 @@ public class Paddle implements Runnable {
 				ball = new Ball(this.x-this.thick-b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
 			else
 				ball = new Ball(this.x+this.thick+b.getRadius(), this.y+s.getDiffY(), dx, dy, b.getRadius());
+			ball.setOwner(player);
 			balls.add(ball);
 			snapBall.remove(snapBall.size()-1);
 		}

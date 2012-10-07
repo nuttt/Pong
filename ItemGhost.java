@@ -17,4 +17,13 @@ public class ItemGhost extends Item {
 		return name;
 	}
 
+	@Override
+	public void makeEffect(Game gui, Ball b) {
+		
+		if(b.owner == 1)
+			gui.getPaddle1().setGhost(true);
+		else
+			gui.getPaddle2().setGhost(true);
+	}
+
 }

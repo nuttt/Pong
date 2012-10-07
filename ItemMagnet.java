@@ -18,4 +18,13 @@ public class ItemMagnet extends Item {
 		return name;
 	}
 
+	@Override
+	public void makeEffect(Game gui, Ball b) {
+		// TODO Auto-generated method stub
+		if(b.owner == 1)
+			gui.getPaddle1().setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
+		else
+			gui.getPaddle2().setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
+	}
+
 }
