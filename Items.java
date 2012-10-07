@@ -68,7 +68,7 @@ public class Items implements Runnable {
 						//System.out.println("");
 					}
 					itemList.add(t);
-					Sound.playItem();
+					Sound.playItem(11);
 			}
 			
 		}

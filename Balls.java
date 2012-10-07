@@ -57,14 +57,12 @@ public class Balls implements Runnable {
 				if (b.getX() + b.getRadius() < 0){
 					if(ballList.size() == 1){
 						paddle2.increaseScore();
-						Sound.playWin();
 					}
 					b.setDead(true);
 				}
 				if(b.getX() - b.getRadius() > gui.getGUIWidth()) {
 					if(ballList.size() == 1){
 						paddle1.increaseScore();
-						Sound.playWin();
 					}
 					b.setDead(true);
 				}

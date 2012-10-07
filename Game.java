@@ -21,7 +21,7 @@ public class Game implements Runnable {
 	private Paddle paddle1, paddle2;
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
-	private final static int WIN_POINT = 2;
+	public final static int WIN_POINT = 2;
 	private static boolean paused = false;
 	private static boolean started = false;
 	private static boolean hasWinner = false;
@@ -237,7 +237,7 @@ public class Game implements Runnable {
 							}
 							
 							// Click to pause the game
-							else if(!Game.isPaused()){
+							else if(!Game.isPaused() && Game.isStarted()){
 								Game.setPaused(true);
 							}
 						}
@@ -278,14 +278,24 @@ public class Game implements Runnable {
 			if(paddle1.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 1;
+<<<<<<< HEAD
 				//System.out.println("player1 wins");
 				//Sound.playLongFull();
+=======
+				System.out.println("player1 wins");
+				Sound.playLongFull();
+>>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 			}
 			else if(paddle2.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 2;
+<<<<<<< HEAD
 				//System.out.println("player2 wins");
 				//Sound.playLongFull();
+=======
+				System.out.println("player2 wins");
+				Sound.playLongFull();
+>>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 			}
 			
 			// Check Pause game

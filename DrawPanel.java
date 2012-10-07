@@ -18,6 +18,22 @@ public class DrawPanel extends JPanel {
 	File padBlueShortFile = new File("img/padb-s.png");
 	File padLongFile = new File("img/pad-l.png");
 	File padBlueLongFile = new File("img/padb-l.png");
+	
+	File padLongMagnetFile = new File("img/pad-l-magnet.png");
+	File padMagnetFile = new File("img/pad-magnet.png");
+	File padShortMagnetFile = new File("img/pad-s-magnet.png");
+	File padBlueLongMagnetFile = new File("img/padb-l-magnet.png");
+	File padBlueMagnetFile = new File("img/padb-magnet.png");
+	File padBlueShortMagnetFile = new File("img/padb-s-magnet.png");
+	
+	File padLongFreezeFile = new File("img/pad-l-freeze.png");
+	File padFreezeFile = new File("img/pad-freeze.png");
+	File padShortFreezeFile = new File("img/pad-s-freeze.png");	
+	
+	File padLongReverseFile = new File("img/pad-l-reverse.png");
+	File padReverseFile = new File("img/pad-reverse.png");
+	File padShortReverseFile = new File("img/pad-s-reverse.png");	
+	
 	File pauseFile = new File("img/pause.png");
 	File startFile = new File("img/home.png");
 	File win1File = new File("img/1win.png");
@@ -26,6 +42,9 @@ public class DrawPanel extends JPanel {
 	Image background, ballMedium, ballBlueMedium, ballYellowMedium;
 	Image padMedium, padBlueMedium, padShort, padBlueShort, padLong, padBlueLong;
 	Image pauseBg, startBg, win1, win2;
+	Image padLongMagnet, padMagnet, padShortMagnet, padBlueLongMagnet, padBlueMagnet, padBlueShortMagnet;
+	Image padLongFreeze, padFreeze, padShortFreeze;
+	Image padLongReverse, padReverse, padShortReverse;
 	Image[] itemsPic = new Image[11];
 	boolean paddle1Blue;
 
@@ -57,6 +76,18 @@ public class DrawPanel extends JPanel {
     		startBg = ImageIO.read(startFile);
     		win1 = ImageIO.read(win1File);
     		win2 = ImageIO.read(win2File);
+    		padLongMagnet = ImageIO.read(padLongMagnetFile);
+    		padMagnet = ImageIO.read(padMagnetFile);
+    		padShortMagnet = ImageIO.read(padShortMagnetFile);
+    		padBlueLongMagnet = ImageIO.read(padBlueLongMagnetFile);
+    		padBlueMagnet = ImageIO.read(padBlueMagnetFile);
+    		padBlueShortMagnet = ImageIO.read(padBlueShortMagnetFile);
+    		padLongFreeze = ImageIO.read(padLongFreezeFile);
+    		padFreeze = ImageIO.read(padFreezeFile);
+    		padShortFreeze = ImageIO.read(padShortFreezeFile);
+    		padLongReverse = ImageIO.read(padLongReverseFile);
+    		padReverse = ImageIO.read(padReverseFile);
+    		padShortReverse = ImageIO.read(padShortReverseFile);
     		for (int i = 0; i < itemsPicFile.length; i++) {
     			itemsPic[i]	= ImageIO.read(itemsPicFile[i]);
     		}
@@ -65,8 +96,11 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+<<<<<<< HEAD
 		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
+=======
+>>>>>>> 01b57a2feb0e0a6b5b6b562adfcc7df0d502829c
 		g.drawImage(background, 0, 0, null);
 
 		g.setColor(Color.BLACK);
@@ -119,28 +153,9 @@ public class DrawPanel extends JPanel {
 		/*
 		 * Paddle
 		 */
-		if(paddle1.getLength() == 261){
-			g.drawImage(padLong, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
-		}
-		else if(paddle1.getLength() == 103){
-			g.drawImage(padShort, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
-		}
-		else{
-			g.drawImage(padMedium, paddle1.getX()-9, paddle1.getY()-paddle1.getLength()/2, null);
-		}
-		if(paddle2.getLength() == 261){
-			g.drawImage(padBlueLong, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
-		}
-		else if(paddle2.getLength() == 103){
-			g.drawImage(padBlueShort, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
-		}
-		else{
-			g.drawImage(padBlueMedium, paddle2.getX()-9, paddle2.getY()-paddle2.getLength()/2, null);
-		}
+		paintPaddle1(paddle1,g);
+		paintPaddle2(paddle2,g);
 		
-		//g.fillRect(paddle1.getX()-paddle1.getThick(), paddle1.getY() - paddle1.getLength()/2, 2*paddle1.getThick()+1, paddle1.getLength());
-		//g.fillRect(paddle2.getX()-paddle2.getThick(), paddle2.getY() - paddle2.getLength()/2, 2*paddle2.getThick()+1, paddle2.getLength());
-
 		/*
 		 * Ball
 		 */
@@ -202,5 +217,93 @@ public class DrawPanel extends JPanel {
 				g.drawImage(win2, 0, 0, null);
 		}
 		
+	}
+	public void paintPaddle1(Paddle paddle, Graphics g){
+		if(paddle.getLength() == 261){
+			if(paddle.isOnMagnet()){
+				g.drawImage(padLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padLongReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padLong, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
+		else if(paddle.getLength() == 103){
+			if(paddle.isOnMagnet()){
+				g.drawImage(padShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padShortReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padShort, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
+		else{
+			if(paddle.isOnMagnet()){
+				g.drawImage(padMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padMedium, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
+	}
+	public void paintPaddle2(Paddle paddle, Graphics g){
+		if(paddle.getLength() == 261){
+			if(paddle.isOnMagnet()){
+				g.drawImage(padBlueLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padLongReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padBlueLong, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
+		else if(paddle.getLength() == 103){
+			if(paddle.isOnMagnet()){
+				g.drawImage(padBlueShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padShortReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padBlueShort, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
+		else{
+			if(paddle.isOnMagnet()){
+				g.drawImage(padBlueMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isGhost()){
+				g.drawImage(padReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else if(paddle.isShocked()){
+				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			}
+			else{
+				g.drawImage(padBlueMedium, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
+			}
+		}
 	}
 }
