@@ -7,6 +7,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class DrawPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Game gui;
 	File bgFile = new File("img/background.jpg");
 	File ballMediumFile = new File("img/ball.png");
@@ -101,8 +105,7 @@ public class DrawPanel extends JPanel {
 		g.drawImage(background, 0, 0, null);
 		Paddle paddle1 = gui.getPaddle1();
 		Paddle paddle2 = gui.getPaddle2();
-		ArrayList<Ball> a = gui.getBalls().getList();
-		Balls balls = gui.getBalls();
+		ArrayList<Ball> ballList = gui.getBalls().getList();
 		Ball b;
 		paddle1Blue = true;
 		
@@ -155,8 +158,8 @@ public class DrawPanel extends JPanel {
 		 * Ball
 		 */
 
-		for (int i = 0; i < a.size(); i++) {
-			b = a.get(i);
+		for (int i = 0; i < ballList.size(); i++) {
+			b = ballList.get(i);
 			//g.fillOval((int)(b.getX() - b.getRadius()), (int)(b.getY() - b.getRadius()), (int)(b.getRadius() * 2), (int)(b.getRadius() * 2));
 			
 			if(b.getOwner() == 1){
@@ -215,42 +218,42 @@ public class DrawPanel extends JPanel {
 	}
 	public void paintPaddle1(Paddle paddle, Graphics g){
 		if(paddle.getLength() == 261){
-			if(paddle.isOnMagnet()){
-				g.drawImage(padLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padLongReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padLong, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
 			}
 		}
 		else if(paddle.getLength() == 103){
-			if(paddle.isOnMagnet()){
-				g.drawImage(padShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padShortReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padShort, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
 			}
 		}
 		else{
-			if(paddle.isOnMagnet()){
-				g.drawImage(padMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padMedium, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
@@ -259,42 +262,42 @@ public class DrawPanel extends JPanel {
 	}
 	public void paintPaddle2(Paddle paddle, Graphics g){
 		if(paddle.getLength() == 261){
-			if(paddle.isOnMagnet()){
-				g.drawImage(padBlueLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padLongReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padLongFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padBlueLongMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padBlueLong, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
 			}
 		}
 		else if(paddle.getLength() == 103){
-			if(paddle.isOnMagnet()){
-				g.drawImage(padBlueShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padShortReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padShortFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padBlueShortMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padBlueShort, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				
 			}
 		}
 		else{
-			if(paddle.isOnMagnet()){
-				g.drawImage(padBlueMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			if(paddle.isShocked()){
+				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else if(paddle.isGhost()){
 				g.drawImage(padReverse, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
-			else if(paddle.isShocked()){
-				g.drawImage(padFreeze, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
+			else if(paddle.isOnMagnet()){
+				g.drawImage(padBlueMagnet, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);
 			}
 			else{
 				g.drawImage(padBlueMedium, paddle.getX()-9, paddle.getY()-paddle.getLength()/2, null);				

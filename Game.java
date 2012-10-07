@@ -28,6 +28,7 @@ public class Game implements Runnable {
 	private static int winner = 0;
 	public static Object lockPause = new Object();
 	public static Wiimote[] wiimotes;
+	private boolean hasAppluaded;
 
 	private Balls balls;
 	private Items items;
@@ -168,6 +169,7 @@ public class Game implements Runnable {
 		paddle2 = new Paddle(this, 2);
 		balls = new Balls(this);
 		items = new Items();
+		hasAppluaded = false;
 	}
 	
 	public void resetPaddleEffect()
@@ -279,13 +281,17 @@ public class Game implements Runnable {
 				hasWinner = true;
 				winner = 1;
 				System.out.println("player1 wins");
-				Sound.playLongFull();
+				if(!hasAppluaded)
+					Sound.playLongFull();
+				hasAppluaded = true;
 			}
 			else if(paddle2.getScore() == WIN_POINT){
 				hasWinner = true;
 				winner = 2;
 				System.out.println("player2 wins");
-				Sound.playLongFull();
+				if(!hasAppluaded)
+					Sound.playLongFull();
+				hasAppluaded = true;
 			}
 			
 			// Check Pause game
@@ -305,6 +311,7 @@ public class Game implements Runnable {
 				{
 					if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
 					{
+							hasAppluaded = false;
 							resetPaddleEffect();
 							if(paddle1.score < paddle2.score || paddle1.score == paddle2.score && Math.random() < 0.5)
 								paddle1.addDefaultSnapBall();

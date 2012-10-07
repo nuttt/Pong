@@ -20,9 +20,6 @@ public class Paddle implements Runnable {
 		this.ghostInterval = ghostInterval;
 	}
 	
-	private boolean onMagnet = false;
-	private boolean shocked = false;
-	
 	public boolean isShocked() {
 		if(shockInterval > 0)
 			return true;
