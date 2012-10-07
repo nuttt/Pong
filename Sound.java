@@ -15,6 +15,7 @@ public class Sound extends Thread {
 	private static File hitYFile = new File("sounds/hitY.wav");
 	private static File hitPaddleFile = new File("sounds/hitPaddle.wav");
 	private static File winFile = new File("sounds/clap.wav");
+	private static File winLongFile = new File("sounds/clap.wav");
 	private static File itemFile = new File("sounds/itemPop.wav");
 	
 	
@@ -55,6 +56,17 @@ public class Sound extends Thread {
 		try {
 			Clip clip = AudioSystem.getClip();
 			AudioInputStream soundFile = AudioSystem.getAudioInputStream(winFile);
+			clip.open(soundFile);
+			clip.loop(0);
+		} catch (LineUnavailableException | UnsupportedAudioFileException
+				| IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void playLongFull(){
+		try {
+			Clip clip = AudioSystem.getClip();
+			AudioInputStream soundFile = AudioSystem.getAudioInputStream(winLongFile);
 			clip.open(soundFile);
 			clip.loop(0);
 		} catch (LineUnavailableException | UnsupportedAudioFileException

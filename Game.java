@@ -18,7 +18,11 @@ public class Game implements Runnable {
 	private Paddle paddle1, paddle2;
 	public final static int GUI_WIDTH = 1000;
 	public final static int GUI_HEIGHT = 700;
+	private final static int WIN_POINT = 2;
 	private static boolean paused = false;
+	private static boolean started = false;
+	private static boolean hasWinner = false;
+	private static int winner = 0;
 	public static Object lockPause = new Object();
 
 	private Balls balls;
@@ -34,6 +38,30 @@ public class Game implements Runnable {
 	 */	
 	public DrawPanel getDrawPanel() {
 		return drawPanel;
+	}
+
+	public static int getWinner() {
+		return winner;
+	}
+
+	public static void setWinner(int winner) {
+		Game.winner = winner;
+	}
+
+	public static boolean isHasWinner() {
+		return hasWinner;
+	}
+
+	public static void setHasWinner(boolean hasWinner) {
+		Game.hasWinner = hasWinner;
+	}
+
+	public static boolean isStarted() {
+		return started;
+	}
+
+	public static void setStarted(boolean started) {
+		Game.started = started;
 	}
 
 	public static boolean isPaused() {
@@ -157,19 +185,44 @@ public class Game implements Runnable {
 					public void mouseClicked(MouseEvent arg0) {
 						if(!arg0.isAltDown())
 						{
-							if(!Game.isPaused()) Game.setPaused(true);
-							else if(Game.isPaused()) {
+							// Click to start the game
+							if(!Game.isPaused() && !Game.isStarted()){
+								Game.setStarted(true);
+								//Resume
+								synchronized (Game.lockPause) {
+									Game.lockPause.notifyAll();
+								}
+							}
+							
+							// Get the winner, Click to start the game
+							else if(Game.isHasWinner()){
+								Game.setWinner(0);
+								paddle1.setScore(0);
+								paddle2.setScore(0);
+								Game.setHasWinner(false);
+								Game.setStarted(false);
+							}
+							
+							// Click to resume the game
+							else if(Game.isPaused() && Game.isStarted()) {
 								Game.setPaused(false);
 								//Resume
 								synchronized (Game.lockPause) {
 									Game.lockPause.notifyAll();
 								}
 							}
+							
+							// Click to pause the game
+							else if(!Game.isPaused()){
+								Game.setPaused(true);
+							}
 						}
 						else
 						{
-							paddle1.fireSnapBall();
-							paddle2.fireSnapBall();
+							if(Game.isStarted()){
+								paddle1.fireSnapBall();
+								paddle2.fireSnapBall();
+							}
 						}
 					}
 
@@ -196,6 +249,22 @@ public class Game implements Runnable {
 		 * Draw GUI
 		 */
 		while (true) {
+			
+			// Check if hasWinner
+			if(paddle1.getScore() == WIN_POINT){
+				hasWinner = true;
+				winner = 1;
+				System.out.println("player1 wins");
+				Sound.playLongFull();
+			}
+			else if(paddle2.getScore() == WIN_POINT){
+				hasWinner = true;
+				winner = 2;
+				System.out.println("player2 wins");
+				Sound.playLongFull();
+			}
+			
+			// Check Pause game
 			synchronized (Game.lockPause) {
 				if(Game.isPaused())
 					try {
@@ -205,6 +274,7 @@ public class Game implements Runnable {
 						e.printStackTrace();
 					}
 			}
+			
 			synchronized(paddle1)
 			{
 				synchronized(paddle2)

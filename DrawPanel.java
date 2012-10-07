@@ -19,10 +19,13 @@ public class DrawPanel extends JPanel {
 	File padLongFile = new File("img/pad-l.png");
 	File padBlueLongFile = new File("img/padb-l.png");
 	File pauseFile = new File("img/pause.png");
+	File startFile = new File("img/home.png");
+	File win1File = new File("img/1win.png");
+	File win2File = new File("img/2win.png");
 	File[] itemsPicFile = new File[11];
 	Image background, ballMedium, ballBlueMedium, ballYellowMedium;
 	Image padMedium, padBlueMedium, padShort, padBlueShort, padLong, padBlueLong;
-	Image pauseBg;
+	Image pauseBg, startBg, win1, win2;
 	Image[] itemsPic = new Image[11];
 	boolean paddle1Blue;
 
@@ -51,6 +54,9 @@ public class DrawPanel extends JPanel {
     		padLong = ImageIO.read(padLongFile);
     		padBlueLong = ImageIO.read(padBlueLongFile);
     		pauseBg = ImageIO.read(pauseFile);
+    		startBg = ImageIO.read(startFile);
+    		win1 = ImageIO.read(win1File);
+    		win2 = ImageIO.read(win2File);
     		for (int i = 0; i < itemsPicFile.length; i++) {
     			itemsPic[i]	= ImageIO.read(itemsPicFile[i]);
     		}
@@ -77,7 +83,7 @@ public class DrawPanel extends JPanel {
 		 */
 		g.setColor(new Color(255, 255, 255, 155));
 		g.setFont(new Font("Arial", Font.BOLD, 52));
-		g.drawString(paddle1.getScore()+" : "+paddle2.getScore(), 470, 50);	
+		g.drawString(paddle1.getScore()+" : "+paddle2.getScore(), 450, 50);	
 		
 
 		/*
@@ -103,7 +109,7 @@ public class DrawPanel extends JPanel {
 					else if (p instanceof ItemGhost) g.drawImage(itemsPic[8], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemMagnet) g.drawImage(itemsPic[9], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemShock) g.drawImage(itemsPic[10], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
-					else if (p instanceof ItemRandomItem) g.drawImage(itemsPic[0], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemRandom) g.drawImage(itemsPic[0], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					
 				} catch (Exception e) {
 					break;
@@ -164,12 +170,10 @@ public class DrawPanel extends JPanel {
 		{
 			for (int i = 0; i < snap1.size(); i++) {
 				s = snap1.get(i);
-				//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
 				g.drawImage(ballYellowMedium, (int)(paddle1.getX()+paddle1.getThick())-3, (int)(int)(paddle1.getY()-s.getRadius()+s.getDiffY())-3, null);
 			}
 			for (int i = 0; i < snap2.size(); i++) {
 				s = snap2.get(i);
-				//g.fillOval((int)(paddle1.getX()+paddle1.getThick()), (int)(paddle1.getY()-s.getRadius()), (int)(2*s.getRadius()), (int)(2*s.getRadius()));
 				g.drawImage(ballBlueMedium, (int)(paddle2.getX()-paddle2.getThick()-3-s.getRadius()*2), (int)(int)(paddle2.getY()-s.getRadius()+s.getDiffY())-3, null);
 			}
 		}
@@ -179,6 +183,24 @@ public class DrawPanel extends JPanel {
 		 */
 		if(Game.isPaused()){
 			g.drawImage(pauseBg, 0, 0, null);
+		}
+		
+		/*
+		 * Start Page
+		 */
+		if(!Game.isStarted()){
+			g.drawImage(startBg, 0, 0, null);
+		}
+		
+		/*
+		 * Has Winner
+		 */
+		if(Game.isHasWinner()){
+			if(Game.getWinner() == 1){
+				g.drawImage(win1, 0, 0, null);
+			}
+			else
+				g.drawImage(win2, 0, 0, null);
 		}
 		
 	}
