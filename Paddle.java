@@ -8,6 +8,7 @@ public class Paddle implements Runnable {
 	int player;
 	int score;
 	int magnetCount;
+	int shockInterval;
 	boolean ghost;
 	
 	public void increaseScore(){
@@ -66,10 +67,17 @@ public class Paddle implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			if(isGhost())
-				setY(gui.getGUIHeight()-gui.getPlayerCoordinate(player).getY());
+			if(shockInterval > 0)
+			{
+				shockInterval -= 10;
+			}
 			else
-				setY(gui.getPlayerCoordinate(player).getY());
+			{
+				if(isGhost())
+					setY(gui.getGUIHeight()-gui.getPlayerCoordinate(player).getY());
+				else
+					setY(gui.getPlayerCoordinate(player).getY());
+			}
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -181,5 +189,25 @@ public class Paddle implements Runnable {
 	{
 		if(magnetCount > 0)
 			magnetCount --;
+	}
+	
+	public synchronized void IncreaseLength()
+	{
+		if(length == 103)
+			length = 151;
+		else if(length == 151)
+			length = 261;
+	}
+	
+	public synchronized void DecreseLength()
+	{
+		if(length == 151)
+			length = 103;
+		else if(length == 261)
+			length = 151;
+	}
+	public void setShcokInterval(int shockInterval) {
+		this.shockInterval = shockInterval;
+		
 	}
 }

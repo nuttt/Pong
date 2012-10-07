@@ -43,7 +43,12 @@ public class Balls implements Runnable {
 			}
 			for (int i = 0; i < ballList.size(); i++) {
 				b = ballList.get(i);
-				b.setX(b.getX() + b.getDX());
+				double factor  = 1;
+				if(b.dash)
+					factor *= ItemDash.DASH_FACTOR;
+				if(b.betray)
+					factor *= ItemBetray.BETRAY_FACTOR;
+				b.setX(b.getX() + b.getDX() * factor);
 				b.setY(b.getY() + b.getDY());
 				// TODO Remove X Bounce
 				/*
@@ -79,11 +84,9 @@ public class Balls implements Runnable {
 						+ paddle1.getThick()
 						&& b.getX() - b.getRadius() > paddle1.getX()
 								- paddle1.getThick()
-<<<<<<< HEAD
 						&& paddle1.isRangeY(b.getY(),b.getRadius()) && b.getDX() < 0) {
 					System.out.println("Hit paddle1");
-					hit.stop();
-					hit.play();
+					Sound.playHitPaddle();
 					b.setOwner(1);
 					b.setDash(false);
 					b.setBetray(false);
@@ -129,29 +132,6 @@ public class Balls implements Runnable {
 								+ Math.pow(b.getDY(), 2));
 						b.setDX(Math.cos(phi2) * v);
 						b.setDY(Math.sin(phi2) * v);
-=======
-						&& paddle1.isRangeY(b.getY()) && b.getDX() < 0) {
-					Sound.playHitPaddle();
-					b.setOwner(1);
-					double x = paddle1.getLength()
-							/ Math.tan(Math.toRadians(MAXIMUM_ANGLE)) / 2;
-					double theta = Math.atan((b.getY() - paddle1.getY()) / x);
-					double phi = -Math.atan(b.getDY() / b.getDX());
-					double phi2;
-					// System.out.println("theta:"+Math.toDegrees(theta)+" phi:"+Math.toDegrees(phi));
-					if (theta == 0)
-						phi2 = phi;
-					else if (theta > 0) {
-						if (phi >= theta)
-							phi2 = (Math.toRadians(90) + phi) / 2;
-						else
-							phi2 = (phi + theta) / 2;
-					} else {
-						if (phi <= theta)
-							phi2 = (Math.toRadians(-90) + phi) / 2;
-						else
-							phi2 = (phi + theta) / 2;
->>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 					}
 				}
 
@@ -162,17 +142,11 @@ public class Balls implements Runnable {
 						+ paddle2.getThick()
 						&& b.getX() + b.getRadius() > paddle2.getX()
 								- paddle2.getThick()
-<<<<<<< HEAD
 						&& paddle2.isRangeY(b.getY(),b.getRadius()) && b.getDX() > 0) {
 					System.out.println("Hit paddle2");
 					b.setDash(false);
 					b.setBetray(false);
-					hit.stop();
-					hit.play();
-=======
-						&& paddle2.isRangeY(b.getY()) && b.getDX() > 0) {
 					Sound.playHitPaddle();
->>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
 					b.setOwner(2);
 					if(paddle2.getMagnetCount() > 0)
 					{
@@ -239,10 +213,10 @@ public class Balls implements Runnable {
 								Ball b2 = new Ball(b.getX(), b.getY(), v
 										* Math.cos(theta2), v
 										* Math.sin(theta2), b.getRadius());
+								b2.setOwner(b.getOwner());
 								itemList.remove(j--);
 								ballList.add(b2);
 							}
-<<<<<<< HEAD
 							else if(p instanceof ItemDash)
 							{
 								itemList.remove(j--);
@@ -277,6 +251,36 @@ public class Balls implements Runnable {
 								b.setDX(v*Math.cos(theta3));
 								b.setDY(v*Math.sin(theta3));
 							}
+							else if(p instanceof ItemFast)
+							{
+								itemList.remove(j--);
+								b.setDX(b.getDX()*ItemFast.FAST_FACTOR);
+								b.setDY(b.getDY()*ItemFast.FAST_FACTOR);
+							}
+							else if(p instanceof ItemBigPad)
+							{
+								itemList.remove(j--);
+								if(b.owner == 1)
+								{
+									paddle1.IncreaseLength();
+								}
+								else
+								{
+									paddle2.IncreaseLength();
+								}
+							}
+							else if(p instanceof ItemSmallPad)
+							{
+								itemList.remove(j--);
+								if(b.owner == 1)
+								{
+									paddle1.DecreseLength();
+								}
+								else
+								{
+									paddle2.DecreseLength();
+								}
+							}
 							else if(p instanceof ItemGhost)
 							{
 								itemList.remove(j--);
@@ -293,8 +297,15 @@ public class Balls implements Runnable {
 								else
 									paddle2.setMagnetCount(ItemMagnet.MAGNET_THRESHOLD);
 							}
-=======
->>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
+							else if(p instanceof ItemShock)
+							{
+								itemList.remove(j--);
+								if(b.owner == 1)
+									paddle1.setShcokInterval(ItemShock.SHOCK_INTERVAL);
+								else
+									paddle2.setShcokInterval(ItemShock.SHOCK_INTERVAL);
+							}
+							
 						}
 					} catch (NullPointerException e) {
 						break;

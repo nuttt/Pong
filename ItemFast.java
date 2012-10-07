@@ -1,9 +1,9 @@
 
-public class ItemDash extends Item {
+public class ItemFast extends Item {
 
 	public final static String name = "Dash";
-	public final static double DASH_FACTOR = 1.5;
-	public ItemDash() {
+	public final static double FAST_FACTOR = 1.3;
+	public ItemFast() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
@@ -11,7 +11,7 @@ public class ItemDash extends Item {
 	@Override
 	public Item clone() {
 		// TODO Auto-generated method stub
-		return new ItemDash();
+		return new ItemFast();
 	}
 	
 	public String getName() {

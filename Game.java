@@ -155,33 +155,21 @@ public class Game implements Runnable {
 						getPlayerCoordinate(2)));
 				drawPanel.addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent arg0) {
-<<<<<<< HEAD
-						synchronized(this)
+						if(!arg0.isAltDown())
 						{
-							if(!arg0.isAltDown())
-							{
-								if(!Game.isPaused) Game.isPaused = true;
-								else if(Game.isPaused) {
-									Game.isPaused = false;
-									//Resume
-									synchronized (Game.lockPause) {
-										Game.lockPause.notifyAll();
-									}
+							if(!Game.isPaused()) Game.setPaused(true);
+							else if(Game.isPaused()) {
+								Game.setPaused(false);
+								//Resume
+								synchronized (Game.lockPause) {
+									Game.lockPause.notifyAll();
 								}
 							}
-							else
-							{
-								paddle1.fireSnapBall();
-								paddle2.fireSnapBall();
-=======
-						if(!Game.isPaused()) Game.setPaused(true);
-						else if(Game.isPaused()) {
-							Game.setPaused(false);
-							//Resume
-							synchronized (Game.lockPause) {
-								Game.lockPause.notifyAll();
->>>>>>> 5ae153499c130f2e4145e73d689326e0f4d1ae62
-							}
+						}
+						else
+						{
+							paddle1.fireSnapBall();
+							paddle2.fireSnapBall();
 						}
 					}
 
@@ -217,15 +205,23 @@ public class Game implements Runnable {
 						e.printStackTrace();
 					}
 			}
-			if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
+			synchronized(paddle1)
 			{
-				paddle1.setGhost(false);
-				paddle2.setGhost(false);
-				//TODO Rule for snapball
-				if(paddle1.score < paddle2.score || paddle1.score == paddle2.score && Math.random() < 0.5)
-					paddle1.addDefaultSnapBall();
-				else
-					paddle2.addDefaultSnapBall();
+				synchronized(paddle2)
+				{
+					if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
+					{
+							paddle1.setGhost(false);
+							paddle2.setGhost(false);
+							paddle1.setDefaultLength();
+							paddle2.setDefaultLength();
+							//TODO Rule for snapball
+							if(paddle1.score < paddle2.score || paddle1.score == paddle2.score && Math.random() < 0.5)
+								paddle1.addDefaultSnapBall();
+							else
+								paddle2.addDefaultSnapBall();
+					}
+				}
 			}
 			drawPanel.repaint();
 			try {
@@ -256,8 +252,8 @@ public class Game implements Runnable {
 		//TODO change test image
 		//TODO ItemList
 
-		// TODO Main
-		Sound.playSoundBg();
+		// TODO Vee fix sound
+		//Sound.playSoundBg();
 		Game game = new Game();
 		game.setShadowMode(true);
 		game.createGUI();

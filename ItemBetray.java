@@ -2,7 +2,7 @@
 public class ItemBetray extends Item {
 
 	public final static String name = "Betray";
-	public final static double BETRAY_FACTOR = 1.6;
+	public final static double BETRAY_FACTOR = 1.5;
 	public ItemBetray() {
 		// TODO Auto-generated constructor stub
 		super();

@@ -96,10 +96,14 @@ public class DrawPanel extends JPanel {
 					else if (p instanceof ItemDash) g.drawImage(itemsPic[2], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemBetray) g.drawImage(itemsPic[3], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemRandom) g.drawImage(itemsPic[4], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
-					
+					else if (p instanceof ItemFast) g.drawImage(itemsPic[5], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemBigPad) g.drawImage(itemsPic[6], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemSmallPad) g.drawImage(itemsPic[7], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemGhost) g.drawImage(itemsPic[8], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemMagnet) g.drawImage(itemsPic[9], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
-				} catch (NullPointerException e) {
+					else if (p instanceof ItemShock) g.drawImage(itemsPic[10], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					
+				} catch (Exception e) {
 					break;
 				}
 			}
