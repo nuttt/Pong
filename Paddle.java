@@ -8,9 +8,18 @@ public class Paddle implements Runnable {
 	int player;
 	int score;
 	int magnetCount;
+
 	int shockInterval;
-	boolean ghost;
+	int ghostInterval;
 	Object hit = new Object();
+	
+	public synchronized int getGhostInterval() {
+		return ghostInterval;
+	}
+	public synchronized void setGhostInterval(int ghostInterval) {
+		this.ghostInterval = ghostInterval;
+	}
+	
 	public Object getHit() {
 		return hit;
 	}
@@ -43,7 +52,7 @@ public class Paddle implements Runnable {
 			x = 50;
 		else if (player == 2)
 			x = gui.getGUIWidth() - 50;
-		ghost = false;
+		ghostInterval = 0;
 		magnetCount = 0;
 	}
 
@@ -70,13 +79,17 @@ public class Paddle implements Runnable {
 					e.printStackTrace();
 				}
 			}
+			if(ghostInterval > 0)
+			{
+				ghostInterval -= 10;
+			}
 			if(shockInterval > 0)
 			{
 				shockInterval -= 10;
 			}
 			else
 			{
-				if(isGhost())
+				if(ghostInterval > 0)
 					setY(gui.getGUIHeight()-gui.getPlayerCoordinate(player).getY());
 				else
 					setY(gui.getPlayerCoordinate(player).getY());
@@ -175,12 +188,7 @@ public class Paddle implements Runnable {
 			snapBall.remove(snapBall.size()-1);
 		}
 	}
-	public synchronized boolean isGhost() {
-		return ghost;
-	}
-	public synchronized void setGhost(boolean ghost) {
-		this.ghost = ghost;
-	}
+	
 	public synchronized int getMagnetCount() {
 		return magnetCount;
 	}
@@ -214,8 +222,5 @@ public class Paddle implements Runnable {
 		this.shockInterval = shockInterval;
 		
 	}
-	public void ToggleGhost() {
-		// TODO Auto-generated method stub
-		this.ghost = !this.ghost;
-	}
+
 }

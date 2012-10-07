@@ -293,8 +293,12 @@ public class Game implements Runnable {
 				{
 					if(balls.isEmpty() && paddle1.getSnapBall().isEmpty() && paddle2.getSnapBall().isEmpty())
 					{
-							paddle1.setGhost(false);
-							paddle2.setGhost(false);
+							paddle1.setGhostInterval(0);
+							paddle2.setGhostInterval(0);
+							paddle1.setMagnetCount(0);
+							paddle2.setMagnetCount(0);
+							paddle1.setShcokInterval(0);
+							paddle1.setShcokInterval(0);
 							paddle1.setDefaultLength();
 							paddle2.setDefaultLength();
 							//TODO Rule for snapball

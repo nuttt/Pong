@@ -2,6 +2,7 @@
 public class ItemGhost extends Item {
 
 	public final static String name = "Ghost";
+	public final static int GHOST_INTERVAL = 5000;
 	public ItemGhost() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -21,9 +22,9 @@ public class ItemGhost extends Item {
 	public void makeEffect(Game gui, Ball b) {
 		
 		if(b.owner == 1)
-			gui.getPaddle1().ToggleGhost();
+			gui.getPaddle1().setGhostInterval(GHOST_INTERVAL);
 		else
-			gui.getPaddle2().ToggleGhost();
+			gui.getPaddle1().setGhostInterval(GHOST_INTERVAL);
 	}
 
 }
