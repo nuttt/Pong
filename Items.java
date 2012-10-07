@@ -20,7 +20,7 @@ public class Items implements Runnable {
 		Items.ITEM_POOL.add(new ItemGhost());
 		Items.ITEM_POOL.add(new ItemMagnet());
 		Items.ITEM_POOL.add(new ItemShock());
-		Items.ITEM_POOL.add(new ItemRandomItem());
+		Items.ITEM_POOL.add(new ItemRandom());
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Items implements Runnable {
 				e.printStackTrace();
 			}
 			synchronized (Game.lockPause) {
-				if(Game.isPaused())
+				if(Game.isPaused() || !Game.isStarted() || Game.isHasWinner())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {

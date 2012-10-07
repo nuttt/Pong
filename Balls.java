@@ -32,9 +32,10 @@ public class Balls implements Runnable {
 		Paddle paddle1 = gui.getPaddle1();
 		Paddle paddle2 = gui.getPaddle2();
 		while (true) {
+			
 			// Check if Paused
 			synchronized (Game.lockPause) {
-				if(Game.isPaused())
+				if(Game.isPaused() || !Game.isStarted() || Game.isHasWinner())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {

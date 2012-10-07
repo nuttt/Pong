@@ -28,7 +28,7 @@ public class Paddle implements Runnable {
 	int thick;
 	ArrayList<SnapBall> snapBall;
 	//151 for normal, 261 for long, 103 for short
-	final static int DEFAULT_LENGTH = 103;
+	final static int DEFAULT_LENGTH = 151;
 	final static int DEFAULT_THICK = 10;
 	Game gui;
 
@@ -56,7 +56,7 @@ public class Paddle implements Runnable {
 		while (true) {
 			// Check if Paused
 			synchronized (Game.lockPause) {
-				if(Game.isPaused())
+				if(Game.isPaused() || Game.isHasWinner())
 					try {
 						Game.lockPause.wait();
 					} catch (InterruptedException e) {
@@ -129,7 +129,7 @@ public class Paddle implements Runnable {
 	}
 	
 	public synchronized boolean isRangeY(double y, double radius) {
-		if( y > this.y - this.length/2 - radius && y < this.y + this.length/2 + radius)
+		if( y > this.y - this.length/2 - radius/2 && y < this.y + this.length/2 + radius/2)
 			return true;
 		return false;
 	}
