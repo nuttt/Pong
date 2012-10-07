@@ -20,7 +20,7 @@ public class Items implements Runnable {
 		Items.ITEM_POOL.add(new ItemGhost());
 		Items.ITEM_POOL.add(new ItemMagnet());
 		Items.ITEM_POOL.add(new ItemShock());
-		
+		Items.ITEM_POOL.add(new ItemRandomItem());
 	}
 
 	@Override

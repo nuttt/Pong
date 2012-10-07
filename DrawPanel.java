@@ -60,6 +60,7 @@ public class DrawPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		// TODO Paint Graphics
+		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getGUIWidth(), gui.getGUIHeight());
 		g.drawImage(background, 0, 0, null);
 
@@ -102,6 +103,7 @@ public class DrawPanel extends JPanel {
 					else if (p instanceof ItemGhost) g.drawImage(itemsPic[8], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemMagnet) g.drawImage(itemsPic[9], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					else if (p instanceof ItemShock) g.drawImage(itemsPic[10], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
+					else if (p instanceof ItemRandomItem) g.drawImage(itemsPic[0], (int) (p.getX() - r) - 4 , (int) (p.getY() - r) - 4, null);
 					
 				} catch (Exception e) {
 					break;
