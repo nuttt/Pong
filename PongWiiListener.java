@@ -45,9 +45,9 @@ public class PongWiiListener implements WiimoteListener {
 			else if(Game.isStarted())
 			{
 				//TODO Make 2 Player Wiimote
-				//if(player == 1)
+				if(player == 1)
 					gui.getPaddle1().fireSnapBall();
-				//else if(player == 2)
+				else if(player == 2)
 					gui.getPaddle2().fireSnapBall();
 			}
 		}
@@ -101,20 +101,21 @@ public class PongWiiListener implements WiimoteListener {
 	@Override
 	public void onIrEvent(IREvent arg0) {
 		//TODO 2 Player Wiimote
-		Coordinate p1 = gui.getPlayerCoordinate(1);
-		Coordinate p2 = gui.getPlayerCoordinate(2);
-		//System.out.println(arg0.getX() +" "+ arg0.getAy());
-		p1.setX(arg0.getX());
-		p1.setY(arg0.getAy());
-		synchronized (p1) {
-			p1.notifyAll();
+		if (player == 1) {
+			Coordinate p1 = gui.getPlayerCoordinate(1);
+			p1.setX(arg0.getX());
+			p1.setY(arg0.getAy());
+			synchronized (p1) {
+				p1.notifyAll();
+			}
+		} else if (player == 2) {
+			Coordinate p2 = gui.getPlayerCoordinate(2);
+			p2.setX(arg0.getX());
+			p2.setY(arg0.getAy());
+			synchronized (p2) {
+				p2.notifyAll();
+			}
 		}
-		p2.setX(arg0.getX());
-		p2.setY(arg0.getAy());
-		synchronized (p2) {
-			p2.notifyAll();
-		}
-		
 	}
 
 	@Override

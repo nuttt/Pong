@@ -197,10 +197,18 @@ public class Game implements Runnable {
 		} else {
 			if (isWiiMote()) {
 				//TODO 2 Player Wiimote
-				wiimotes = WiiUseApiManager.getWiimotes(1, true);
+				wiimotes = WiiUseApiManager.getWiimotes(2, true);
 				wiimotes[0].activateIRTRacking();
-				//wiimotes[0].activateMotionSensing();
+				//wiimotes[0].activateMotionSensing()				
 				wiimotes[0].addWiiMoteEventListeners(new PongWiiListener(this, 1));
+				
+				// Make Player2 works
+				wiimotes[1].activateIRTRacking();
+				wiimotes[1].addWiiMoteEventListeners(new PongWiiListener(this, 2));
+				
+				//Enable lights
+				wiimotes[0].setLeds(true,false,false,false);
+				wiimotes[1].setLeds(false,true,false,false);
 
 			} else {
 				drawPanel.addMouseMotionListener(new PongMouseListener(
@@ -359,8 +367,12 @@ public class Game implements Runnable {
 		//TODO 2 Player Wiimote
 		if(game.isWiiMote())
 		{
+			// Player1
 			Thread RumbleThread1 = new Thread(new Rumble(game,1));
 			RumbleThread1.start();
+			// Player2
+			Thread RumbleThread2 = new Thread(new Rumble(game,2));
+			RumbleThread2.start();
 		}
 	}
 }
